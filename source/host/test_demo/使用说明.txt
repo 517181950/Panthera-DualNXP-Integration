@@ -1,0 +1,10 @@
+此目录是实物演示、压测及抓包工具，SDK核心位于上一级host。
+运动演示直接在PyCharm点击Run即连接实物；不需要--execute或--out。--preview仅用于可选离线预览。
+cycle_all_grasp.py：J4 30..60度、J6 -90..90度和全手抓握同步；kp10/kd0.7、柔顺前馈500mA，周期2s。不切模式。默认18秒平滑接入后持续循环；可用--seconds指定有限运行时间。
+cycle_live.py：J4/J6与拇指同步；kp10/kd0.7、拇指0..0.524rad，柔顺100mA。默认18秒接入后持续循环。
+hand_grasp_live.py：全手500mA柔顺抓握/松开持续循环，机械臂原已使能的J4/J6保持当前位置。
+demo_thumb_joint6.py：单次J6与拇指演示，参数保留其独立测试设置。
+robot_udp.py / test-udp.cmd：连接真实板子做通信压测，不调用进入运动active操作。
+session_capture.py：记录辅助库，本身不启动运动。
+logs/：每次运行自动创建独立日志目录。持续循环可在该次日志目录新建STOP文件结束，或在PyCharm中中断脚本。
+以上脚本保留__main__入口：仅import不会连接硬件。跟踪误差只记录，不作为停止条件。

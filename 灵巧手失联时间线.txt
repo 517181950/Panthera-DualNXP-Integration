@@ -1,0 +1,39 @@
+灵巧手失联时间线复核（2026-11-06，本地时间 Asia/Shanghai）
+
+结论：当前失联是此前多次出现、未闭环解决的通信中断。最早保存证据在11:01单臂阶段；最近一次双手同时正常在13:23至13:25。新臂手约13:25:20停止更新，之后未找到恢复证据；原臂手约13:37:53停止更新，15:48短暂恢复过，最后角度反馈约15:48:35。17点板载GELLO接入、18点拆分入口、19点软限位修改均晚于这些故障。
+
+时间与证据：
+1. 11:01:26启动的原臂单臂会话：hand.csv相对手循环23.38秒时角度年龄114.5ms，此后持续增长；结束时73.37秒未更新。按会话起点、持续时间和最终角度年龄估算最后回包约11:01:57。此时电机仍有反馈，手所有字段失效，后续只读查询也没有恢复。
+   logs/gello_single_arm_20261106_110126_148085/hand.csv
+   evidence/hand-response-loss-summary.json、hand-response-loss-readonly.json、hand-response-loss-all-fields.json
+2. 11:09至11:16原臂手恢复，11:11验收记录扳机0至100%、手50Hz控制及实际手指运动。11:27启动会话再次失联，约11:34:35结束；记录明确为双臂合并固件烧录之前复现。
+   evidence/arm-hand-corrected-live-verification.json
+   evidence/hand-response-loss-recurrence.json
+3. 12:22:43新臂手失联，原臂手继续回复；12:43:42原臂手失联，新臂手继续回复；12:44:26至12:46:16会话两只手均正常，最终人工Ctrl+C退出。
+   logs/one_gello_two_arms_20261106_122157_151019/peer.jsonl
+   logs/one_gello_two_arms_20261106_124247_729105/peer.jsonl
+   logs/one_gello_two_arms_20261106_124426_568655/hands.csv
+4. 13:22/13:23已烧录本地回零v2，13:23:40启动双臂双手。13:25:20.94左右新臂手最后角度反馈，累计8400帧后不再增加。会话以left hand feedback lost (117.3ms)终止，原臂手仍新鲜。之后SW2观察中计数仍为8400、年龄持续增长，故障发生于13:26新臂FPU版本烧录之前；不能将该次失联归因于稍后的FPU更新。
+   logs/one_gello_two_arms_20261106_132340_597282/left/summary.json
+   logs/one_gello_two_arms_20261106_132340_597282/peer.jsonl
+   evidence/local-home-v2-sw2.jsonl
+   evidence/local-home-fpu-flash-left.txt
+5. 13:27原臂FPU版本烧录后，13:28仍有手反馈。13:42:42检查时，原臂手累计31783帧，角度年龄289.275秒；按文件记录时间估算停止于13:37:53左右（这一时间点以文件mtime估算，不是精确事件时间）。此时新臂手仍没有恢复。
+   evidence/local-home-fpu-both-boot.jsonl
+   evidence/sw2-confirmed-before-j2-first.json
+6. 15:48原臂MCU出现新boot，手收到2351条角度反馈，说明曾短暂恢复。15:48:39记录角度年龄3.748秒，后续15:51计数仍2351、年龄增长；多条带时间戳记录反推最后回复约15:48:35。新臂手仍为0回包。现有后续记录未找到两手再次恢复的证据。
+   evidence/upright-still-post-hold-interruption.json
+   evidence/upright-paired-sw2-live.jsonl
+7. 16:58板载GELLO改动前，两手都已经无反馈；17:50 USB版本检查、18:22拆分入口首次错误，均延续该状态。
+   evidence/before-board-gello-state.json
+   evidence/board-gello-usb-after-flash-arm-state.json
+   logs/one_gello_two_arms_20261106_182235_060709/left/summary.json
+8. 18:36之后require_hands=False允许缺手运行，启动等待失败后关闭该手查询，继续机械臂；它解释了后来臂能跑而手不动，但不是最早的失联起因。19:31重新启用查询仍无反馈。
+   logs/one_gello_two_arms_20261106_192951_203315/active-hands.json
+   evidence/hand-unreachable-query.json
+
+代码对照：将evidence/before-dual-arm-hand/working-source.tar.gz与当前source比较，忽略CRLF差异，手编码/解码、查询请求及手发送调度分支未变；can_bus差异主要在本地回零接管及电机发送分支。此对照不能排除其他配置、总线负荷/时序、手内部状态或供电问题，更不能据此认定硬件损坏。
+差异：evidence/hand-history-can_codec.c.diff、hand-history-can_bus.c.diff。
+所有带wall时间与角度年龄的最后回包估算：evidence/hand-history-response-times.json。
+
+本轮仅回读文件，未连接硬件、改线、烧录或发送运动命令。线未变是用户已确认条件。后续应优先追查运行期间手突然停止回复的复现机制，以及早期可恢复会话和后期持续失联之间的固件/总线状态差异。

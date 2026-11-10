@@ -1,0 +1,40 @@
+Panthera 双 NXP 臂手集成 — 2026-11-06 更新
+
+node11 / left / .11 / KWP5LJ1OK2D5A / UDP5005,5006：新臂＋同型号P1L手。
+node12 / right / .12 / FVIZ5SIGKZEBZ / UDP5015,5016：原臂＋P1L手。
+两板各管本侧六轴0x11..0x16和手0x08；CAN 1M/5M。
+一个GELLO通过电脑将相同逻辑关节角目标分别发两侧，各用自己的实测姿态计算重力补偿。
+两板另用UDP5020交换状态，不通过此通道驱动对方执行器，也没有板间力反馈闭环。
+不关联O6/ARMGeomSearch模型。
+
+启动双臂双手：
+cd /home/aster/Desktop/Panthera-DualNXP-Integration
+/home/aster/miniforge3/envs/panthera/bin/python run-one-gello-two-arms.py --execute
+程序先等待NXP本机回零完成，再接管。GELLO必须回到已保存零位才开始跟随。
+新臂跟随低阻抗，原臂跟随原高增益；仅回零使用回零增益。详细参数见 ONE_GELLO_TWO_ARMS.txt。
+同一套GELLO和UDP端口只能由一个控制程序占用。
+
+本机回零：
+两块NXP均已包含SW2本侧回零和NXP启动自动回零；后者已实机验证。
+SW2实体按键验收待完成。按键、控制切换、仅臂手电源重启时的行为见 SW2_HOME_USAGE.txt。
+回零和零位保持使用NXP内置带手重力模型，不需要运行电脑控制程序。
+GELLO遥操作仍依赖电脑。
+
+频率与协议：
+臂CAN控制500Hz/轴；手目标和角度查询50Hz。板间目标500Hz，FPU版本机保持实测约496–499Hz。
+PHD1 v2，464字节，含本侧回零阶段、代次、错误、触发来源和整圈零偏；PC解码兼容旧v1。
+数据有效位须结合数据年龄使用。板间500Hz发布不代表手有500Hz新数据。
+peer_age_us是接收侧本地计算的包龄，不能当成同步时钟下的单程延迟。
+旧active字段表示电脑控制状态；本机是否回零/保持应看home_state，不能仅凭active=0判断电机不在控制。
+
+只读观察：
+/home/aster/miniforge3/envs/panthera/bin/python tools/watch-local-home.py --seconds 30 --output evidence/home-watch.json
+当前部署：evidence/installed-local-home.json；当前遥操作进程：evidence/current-bimanual-session.json。
+
+构建、验证：bash check-offline.sh；bash build-local.sh left；bash build-local.sh right。
+烧录：/home/aster/robotics/Winora_Firmwares/.venv/bin/python tools/flash-dual.py left（或right）。
+烧录重启会触发本机回零，应先停止电脑控制、保持回零路径畅通。
+当前安装镜像已另存 evidence/installed-local-home/left.bin 和 right.bin。
+原遥操作固件备份：evidence/before-local-home/{left,right}-application-before-flash.bin，支持flash-dual.py --image显式回退。
+
+未解决：node11新手仍会间歇失去反馈；不标记为长期稳定。76项Python测试、CAN/peer协议及C回零状态机测试通过；模型10001姿态对比通过。

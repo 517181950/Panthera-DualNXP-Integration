@@ -1,0 +1,135 @@
+{
+  "format": "panthera-gravity-v1",
+  "model_identity": {
+    "urdf_sha256": "4794123c04aad589c32c73d13ce29971bb4245c4a5b13ad796cadbd64783ce25",
+    "sign": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "offset_rad": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "payload_mass": 0,
+    "payload_com": [
+      0,
+      0,
+      0
+    ],
+    "gravity": [
+      0,
+      0,
+      -9.81
+    ]
+  },
+  "theta": [
+    0.31947644,
+    0.001182788039518805,
+    -0.00016916277497999556,
+    0.008149987748797997,
+    1.5464401399999996,
+    -0.1786629041051187,
+    -0.0038171400551676024,
+    -0.03123072554767589,
+    0.575534868389187,
+    0.13394062650090016,
+    -0.0009429239306720021,
+    0.041777766643623836,
+    0.3349622170880013,
+    0.010371262507530774,
+    -0.00026662200000000184,
+    0.017885301100808777,
+    0.2843885454498997,
+    -0.0004452373326444923,
+    -0.004360071477746528,
+    -0.00507984436469569,
+    0.624,
+    0.030033420558503863,
+    0.006980226363569863,
+    -0.015080117347527169
+  ],
+  "fit_scope": "link6",
+  "fit_joint_ids": [
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "fixed_links": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "poses": 293,
+  "rank": 3,
+  "parameters": 3,
+  "fully_observable": true,
+  "usable": true,
+  "quality_issues": [],
+  "mass_constraint": {
+    "nominal_kg": 0.624,
+    "tolerance_kg": 0.0,
+    "lower_kg": 0.624,
+    "upper_kg": 0.624,
+    "at_boundary": false,
+    "interpretation": "TOTAL replacement hand mass, not added to old link6 mass"
+  },
+  "link6": {
+    "aggregate_mass_kg": 0.624,
+    "first_moment_kg_m": [
+      0.030033420558503863,
+      0.006980226363569863,
+      -0.015080117347527169
+    ],
+    "aggregate_com_m": [
+      0.04813048166426901,
+      0.011186260198028626,
+      -0.024166854723601233
+    ],
+    "aggregate_com_mm": [
+      48.13048166426901,
+      11.186260198028627,
+      -24.166854723601233
+    ],
+    "initial_mass_kg": 0.3936301449807948,
+    "mass_change_kg": 0.2303698550192052,
+    "initial_com_mm": [
+      218.12976415488615,
+      17.457460858320527,
+      -3.6451290137607
+    ]
+  },
+  "training_rmse_nm": [
+    0.45007434126220763,
+    0.3247489300815312,
+    0.44912349501165416,
+    0.10807182567740856,
+    0.10018553484957377
+  ],
+  "training_overall_rmse_nm": 0.32602372764004034,
+  "holdout_rmse_nm": [
+    0.4503075465952921,
+    0.3248612104413105,
+    0.44929247458761407,
+    0.10808645867334182,
+    0.10026725229366638
+  ],
+  "holdout_overall_rmse_nm": 0.3261630343010049,
+  "interpretation": "Equal point weights; J2-J6 torque only. Upstream links fixed; terminal total mass constrained by measurement. Rotational inertia not identified. A boundary solution indicates tension between torque data/model and mass prior.",
+  "source_datasets": [
+    "C:\\Users\\KelvinLM\\Documents\\ClionProjects\\FRDM-MCXN947-L1-Hand-PantheraHT\\host\\examples\\logs\\gravity285_highgain_001",
+    "C:\\Users\\KelvinLM\\Documents\\ClionProjects\\FRDM-MCXN947-L1-Hand-PantheraHT\\host\\examples\\logs\\priority3_001"
+  ],
+  "purpose": "Initial capture gravity feedforward: total replacement hand mass fixed at 624 g, COM from existing 293 points. New capture will fit COM with mass tolerance +/-30 g."
+}

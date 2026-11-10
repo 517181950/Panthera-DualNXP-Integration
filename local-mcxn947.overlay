@@ -1,0 +1,14 @@
+/* Local Zephyr 4.4.99 ENET-QOS layout. This is a new build candidate,
+ * not a byte-identical reconstruction of the historical firmware. */
+&enet {
+    status = "okay";
+    /delete-property/ zephyr,random-mac-address;
+    nxp,unique-mac;
+};
+&enet_mdio { status = "okay"; };
+&phy { status = "okay"; };
+&flexcan0 {
+    status = "okay";
+    bitrate = <1000000>;
+    bitrate-data = <5000000>;
+};

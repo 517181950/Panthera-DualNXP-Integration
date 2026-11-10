@@ -1,0 +1,17 @@
+/* J11 USB host. J5 UART is intentionally not enabled: the board connects
+ * P1_16 to CAN0_RX/P1_11 through R53 (UM12018, page 16). */
+&i3c1 { status = "disabled"; };
+&flexcomm5_lpuart5 { status = "disabled"; };
+zephyr_uhc0: &usb1 {
+    compatible = "nxp,uhc-ehci";
+    /delete-property/ num-bidir-endpoints;
+    status = "okay";
+    interrupts = <67 3>;
+    phy-handle = <&usbphy1>;
+};
+&usbphy1 {
+    status = "okay";
+    tx-d-cal = <4>;
+    tx-cal-45-dp-ohms = <7>;
+    tx-cal-45-dm-ohms = <7>;
+};

@@ -1,0 +1,49 @@
+GELLO 主手速度读取 — 程序与文档更新包
+打包日期：2026-10-30
+
+本包用于更新“遥操资料_20261030_完整版/MJC-Dishwasher_Gello遥操”。
+包含位置+速度读取协议、采集线程、调参界面、运行入口、使用文档和 43 项 GELLO 测试。
+不包含 MuJoCo 的 assets 场景资源和 .venv 虚拟环境；运行仿真请使用原完整版目录。
+本次仅更新 GELLO 主手项目，不更新 Ragtel，也不更新 Panthera 实机 SDK。
+
+安装方法
+1. 解压本 ZIP，先备份原来的 MJC-Dishwasher_Gello遥操 目录。
+2. 将本包内 MJC-Dishwasher_Gello遥操/ 的内容复制到原项目同名目录，覆盖同名程序文件。
+3. 保留原项目的 assets/、.venv/ 和 gello_config.json。
+   本包的“配置参考/gello_config.json”是打包时的参数副本，供核对，不要直接覆盖自己的标定和串口设置。
+   旧配置缺少新增字段时，程序默认开启速度读取，单位为 0.732 RPM/原始值。
+   可以在窗口调整并保存。新增 JSON 字段位于 serial 内：
+       "read_velocity": true,
+       "velocity_rpm_per_unit": 0.732
+   请按实际舵机相位设置选择 0.732 或 0.0146；修改后断开并重新连接。
+
+启动（复制以下两行）
+cd "/home/chenxing/workspace/遥操资料_20261030_完整版/MJC-Dishwasher_Gello遥操"
+bash ./运行_Gello遥操.sh
+
+只打开调参窗口
+./.venv/bin/python gello_tuner.py
+
+只读连接检查（会连接 JSON 中配置的 GELLO 串口）
+./.venv/bin/python 检查Gello连接.py
+
+无硬件验证（在原项目目录执行）
+./.venv/bin/python gello_tuner.py --check-config
+./.venv/bin/python run_gello.py --smoke-test
+./.venv/bin/python -m unittest discover -s tests -p 'test_gello*.py'
+
+更新内容
+- 同一串口线程从地址 56 连续读取位置和速度，保留原位置读取接口。
+- 六关节显示输入速度与映射速度（rad/s）；夹爪显示舵机轴角速度。
+- 快照提供原始速度、换算速度、速度有效性及每节点响应接收时间。
+- 超时、错误帧、被拒绝跳变、状态告警及断连不会作为有效旧速度继续显示。
+- 不改变现有位置控制，不启用速度前馈。
+
+验证记录
+43 项 GELLO 测试通过；配置校验、MuJoCo smoke test 通过；虚拟显示环境下界面验证通过。
+尚未连接实物验证速度单位、卸力拖动反馈及实际更新率。
+详细用法见项目内“GELLO机械臂遥操作配置与速度读取.md”。
+
+文件完整性
+SHA256SUMS.txt 列出除自身外全部文件的 SHA-256。
+解压后进入 GELLO主手速度读取_更新包/，可执行 sha256sum -c SHA256SUMS.txt。

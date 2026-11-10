@@ -1,0 +1,270 @@
+<?xml version='1.0' encoding='utf-8'?>
+<robot name="Panthera-HT_description_V1.1.0">
+  <!-- Shared static gravity equivalent from 285 points per arm; J2_EXTRA weight 5.0. No torque biases. Fixed-child inertials are merged into joint bodies. Masses and CoMs are nonunique; rotational inertias retained per nominal unit mass, not identified. -->
+  <!-- Shared static gravity equivalent from 285 points per arm. No torque biases. Fixed-child inertials are merged into joint bodies. Masses and CoMs are nonunique; rotational inertias retained per nominal unit mass, not identified. -->
+  <link name="base_link">
+    <inertial>
+      <origin xyz="-0.00199372 0.00013575 0.02313639" rpy="0 0 0" />
+      <mass value="1.26174391" />
+      <inertia ixx="0.00149111" ixy="-0.00000164" ixz="-0.00002283" iyy="0.00152128" iyz="0.00000664" izz="0.00208055" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://Panthera-HT_description_V1.1.0/meshes/visual/base_link.glb" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://Panthera-HT_description_V1.1.0/meshes/stl/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="link1">
+    <inertial>
+      <origin xyz="0.0037022700000000162 -0.00052949999999998614 0.025510449999999994" rpy="0 0 0" />
+      <mass value="0.31947643999999997" />
+      <inertia ixx="0.00047321" ixy="1.61e-06" ixz="-4.9469999999999999e-05" iyy="0.00026805999999999998" iyz="5.6500000000000001e-06" izz="0.00042904" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://Panthera-HT_description_V1.1.0/meshes/visual/link1.glb" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://Panthera-HT_description_V1.1.0/meshes/stl/link1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="joint1" type="revolute">
+    <origin xyz="0 0 0.0584000000000033" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="link1" />
+    <axis xyz="0 0 1" />
+    <limit lower="-2.705260340591" upper="2.705260340591" effort="21" velocity="7.853981633974" />
+  </joint>
+  <link name="link2">
+    <inertial>
+      <origin xyz="-0.11553172960520719 -0.002468340000000002 -0.020195237267752179" rpy="0 0 0" />
+      <mass value="1.5464401399999996" />
+      <inertia ixx="0.00045720000000000141" ixy="-9.8599999999999971e-06" ixz="-3.7749999999999996e-05" iyy="0.022991299999999992" iyz="-9.9999999999999974e-07" izz="0.023110929999999988" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://Panthera-HT_description_V1.1.0/meshes/visual/link2.glb" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://Panthera-HT_description_V1.1.0/meshes/stl/link2.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="joint2" type="revolute">
+    <origin xyz="0.0181985117133034 0 0.0534999999999806" rpy="0 0 0" />
+    <parent link="link1" />
+    <child link="link2" />
+    <axis xyz="0 1 0" />
+    <limit lower="0.000000000000" upper="3.141592653590" effort="36" velocity="6.283185307180" />
+  </joint>
+  <link name="link3">
+    <inertial>
+      <origin xyz="0.23272373900781126 -0.0016383437085420514 0.072589462321460879" rpy="0 0 0" />
+      <mass value="0.57553486838918699" />
+      <inertia ixx="0.00057873010892431169" ixy="4.1573355972179952e-05" ixz="-0.00073019928777008311" iyy="0.0049658492983379963" iyz="7.4510926714293287e-06" izz="0.0048879089984276486" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://Panthera-HT_description_V1.1.0/meshes/visual/link3.glb" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://Panthera-HT_description_V1.1.0/meshes/stl/link3.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="joint3" type="revolute">
+    <origin xyz="-0.259999999999987 0 0" rpy="0 0 0" />
+    <parent link="link2" />
+    <child link="link3" />
+    <axis xyz="0 -1 0" />
+    <limit lower="0.0" upper="4.2" effort="36" velocity="6.283185307180" />
+  </joint>
+  <link name="link4">
+    <inertial>
+      <origin xyz="0.030962484657802571 -0.00079597634120613344 0.05339498065272822" rpy="0 0 0" />
+      <mass value="0.33496221708800128" />
+      <inertia ixx="0.00032557210960230102" ixy="-1.0741121761288575e-05" ixz="-0.00022237025051748778" iyy="0.00050406230968126056" iyz="-8.653190608106701e-06" izz="0.00044275305854692018" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://Panthera-HT_description_V1.1.0/meshes/visual/link4.glb" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://Panthera-HT_description_V1.1.0/meshes/stl/link4.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="joint4" type="revolute">
+    <origin xyz="0.230000000000164 0 0.0599999999994667" rpy="0 0 0" />
+    <parent link="link3" />
+    <child link="link4" />
+    <axis xyz="0 -1 0" />
+    <limit lower="-1.570796326795" upper="1.570796326795" effort="21" velocity="7.853981633974" />
+  </joint>
+  <link name="link5">
+    <inertial>
+      <origin xyz="-0.0015655951681884076 -0.015331389212068792 -0.017862338149588371" rpy="0 0 0" />
+      <mass value="0.28438854544989972" />
+      <inertia ixx="4.8131764768713225e-05" ixy="3.1295035610346694e-08" ixz="3.92231112983012e-06" iyy="5.5746890100564264e-05" iyz="-1.2518014244138678e-07" izz="3.2515541999150222e-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://Panthera-HT_description_V1.1.0/meshes/visual/link5.glb" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://Panthera-HT_description_V1.1.0/meshes/stl/link5.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="joint5" type="revolute">
+    <origin xyz="0.0699999999999991 -0.000450862561756094 0.034989137438241" rpy="0 0 0" />
+    <parent link="link4" />
+    <child link="link5" />
+    <axis xyz="0 0 -1" />
+    <limit lower="-1.745329251994" upper="1.745329251994" effort="10" velocity="16.755160819146" />
+  </joint>
+  <link name="link6">
+    <inertial>
+      <origin xyz="0.046972837017030138 0.011537630531354842 -0.033253025980458761" rpy="0 0 0" />
+      <mass value="0.44357193427482511" />
+      <inertia ixx="0.00070399787535818789" ixy="-1.2017559608877727e-06" ixz="8.7830785391761532e-06" iyy="0.00048642044271169054" iyz="7.8821476280638213e-06" izz="0.0010348723518672763" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://Panthera-HT_description_V1.1.0/meshes/visual/link6.glb" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://Panthera-HT_description_V1.1.0/meshes/stl/link6.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="joint6" type="revolute">
+    <origin xyz="0.0249500000000002 0 -0.0374999999999997" rpy="0 0 0" />
+    <parent link="link5" />
+    <child link="link6" />
+    <axis xyz="1 0 0" />
+    <limit lower="-2.792526803191" upper="2.792526803191" effort="10" velocity="16.755160819146" />
+  </joint>
+  <link name="gripper_center_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://Panthera-HT_description_V1.1.0/meshes/visual/gripper_center_link.glb" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://Panthera-HT_description_V1.1.0/meshes/stl/gripper_center_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="gripper_center_joint" type="fixed">
+    <origin xyz="0.16605080437572 0 0" rpy="0 0 0" />
+    <parent link="link6" />
+    <child link="gripper_center_link" />
+    <axis xyz="0 0 0" />
+  </joint>
+  <link name="gripper_L_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://Panthera-HT_description_V1.1.0/meshes/visual/gripper_L_link.glb" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://Panthera-HT_description_V1.1.0/meshes/stl/gripper_L_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="gripper_L_joint" type="fixed">
+    <!-- <joint name="gripper_L_joint" type="prismatic"> -->
+    <origin xyz="-0.000333779823793873 0.041000000000008 0" rpy="0 0 0" />
+    <parent link="gripper_center_link" />
+    <child link="gripper_L_link" />
+    <axis xyz="0 1 0" />
+    <limit lower="-0.041" upper="0" effort="0" velocity="0" />
+  </joint>
+  <link name="gripper_R_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://Panthera-HT_description_V1.1.0/meshes/visual/gripper_R_link.glb" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://Panthera-HT_description_V1.1.0/meshes/stl/gripper_R_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="gripper_R_joint" type="fixed">
+    <!-- <joint name="gripper_R_joint" type="prismatic"> -->
+    <origin xyz="-0.000333779823800812 -0.0409999999999889 0" rpy="0 0 0" />
+    <parent link="gripper_center_link" />
+    <child link="gripper_R_link" />
+    <axis xyz="0 1 0" />
+    <limit lower="0" upper="0.041" effort="0" velocity="0" />
+    <!-- <mimic joint="gripper_L_joint" multiplier="-1" offset="0" /> -->
+  </joint>
+  <!-- <link name="camera_link">
+    <inertial>
+      <origin xyz="0.00879653211256671 0.0179226948373875 -0.015388922996916" rpy="0 0 0" />
+      <mass value="0.08" />
+      <inertia ixx="3.17228381323626E-05" ixy="4.07483666889155E-10" ixz="-1.49573102173192E-08" iyy="1.40854439300304E-05" iyz="-1.49982732096388E-06" izz="3.88356708336766E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://Panthera-HT_description_V1.1.0/meshes/visual/camera_link.glb" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://Panthera-HT_description_V1.1.0/meshes/stl/camera_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="camera_joint" type="fixed">
+    <origin xyz="0.0773830142568786 0.00875000000001109 0.0657518869921395" rpy="-1.91986217719376 0 -1.5707963267949" />
+    <parent link="link6" />
+    <child link="camera_link" />
+    <axis xyz="0 0 0" />
+  </joint> -->
+</robot>

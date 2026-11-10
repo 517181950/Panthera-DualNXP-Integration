@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.system.id="pyproject.toml" type="PYTHON_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$/host/examples/遥操资料_20261030_完整版(2)/遥操资料_20261030_完整版/Ragtel_遥操作GUI/sdk/fci/3rdparty/acados/external/Clarabel.cpp/Clarabel.rs">
+      <sourceFolder url="file://$MODULE_DIR$/host/examples/遥操资料_20261030_完整版(2)/遥操资料_20261030_完整版/Ragtel_遥操作GUI/sdk/fci/3rdparty/acados/external/Clarabel.cpp/Clarabel.rs/src" isTestSource="false" />
+    </content>
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

@@ -1,0 +1,39 @@
+{
+  "source": "/home/aster/Desktop/Panthera-DualNXP-Integration/logs/gello_seven_short_hold_20261110_094926_973313",
+  "high_raw_ticks": {
+    "1": 402,
+    "2": 720,
+    "3": 3140,
+    "4": -124,
+    "5": 2194,
+    "6": 4021,
+    "7": 297
+  },
+  "zero_raw_ticks": {
+    "1": 166,
+    "2": 1115,
+    "3": 2518,
+    "4": 83,
+    "5": 2092,
+    "6": 4121,
+    "7": 291
+  },
+  "raw_frame_offsets": [
+    0,
+    0,
+    0,
+    0,
+    -4096,
+    0,
+    0
+  ],
+  "pose_feedback_span_ticks": {
+    "1": 0,
+    "2": 0,
+    "3": 0,
+    "4": 0,
+    "5": 0,
+    "6": 0,
+    "7": 0
+  }
+}

@@ -1,0 +1,11 @@
+双NXP回零（任意有效起点版）
+
+任一板User SW2(GPIO0_23)请求双臂回零；正常NXP上电/复位触发本侧。CAN恢复不自动触发。
+不再按模型角度范围拦截起始姿态。从当前反馈出发，选最近的等效竖直角，再对正J1、回到同圈等效零位。
+例如J2=-164度先到-270度竖直，再到-360度零位；整圈偏移仅是软件坐标，未改电机零点。
+最大速度30度/秒，加速度30度/秒²。卡住、明显不跟随、反馈/电机故障仍停机，不能保证跨越机械限位或障碍。
+本次烧录后检修锁、mode0、未自动试动；现场状态见STATUS.txt。
+STOP解除驱动力，不是机械刹车，保留现场急停和支撑。
+
+只读查看：
+/home/aster/miniforge3/envs/panthera/bin/python tools/watch-local-home.py --seconds 30 --output evidence/home-watch.json

@@ -1,0 +1,11 @@
+SDK环境：Conda L1-Hand-PantheraHT，Python3.12。
+SDK核心：robot_sdk.py、robot_protocol.py、robot_faults.py；读取../protocol/robot_messages.wl（revision5）。
+演示/测试：test_demo/。运动脚本直接Run即连接实物；默认不切换手模式。__main__保护保证import无硬件动作。
+环境启动：activate-host.cmd；脚本运行：run-host.cmd test_demo\脚本.py。
+运行日志：test_demo/logs/脚本名_时间戳/。
+SDK机械臂单位：q(rad)、dq(rad/s)、kp(Nm/rad)、kd(Nm*s/rad)、tau_ff(Nm)。
+当前只接入J4/J6标准模型转换，其余轴未标定；MCU重力/摩擦和双臂遥操作尚未完成。
+手柔顺模式前馈与位置模式限流字段独立，不混用。无应用层运动clamp。
+
+状态示例：examples/0_robot-state.py。直接运行：500Hz无运动目标探针，500Hz状态发布，50Hz打印。支持每台电机/每类手反馈的实际计数。
+示例退出恢复原来的状态发布/手轮询周期和CAN trace设置，不发电机失能或模式切换。

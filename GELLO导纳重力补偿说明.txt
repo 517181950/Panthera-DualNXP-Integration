@@ -1,0 +1,72 @@
+HD1910M GELLO：位置内环 + 电流导纳外环
+
+当前实现状态
+代码及离线测试已完成；尚未完成实物URDF坐标、电流力矩辨识，不能声称已实现机上重力补偿。
+不会使用旧机械零位或旧遥操方向冒充URDF零位/方向。
+模型来自 /home/aster/workspace/2026110908_v3小舵机总装.SLDASM 下的URDF。
+固化副本：source/models/gello_hd1910/gello_hd1910.urdf；来源和SHA见同目录source.json。
+URDF有6个转动关节，可动质量约0.231kg；ID7不在模型中，运行时仅保持启动位置。
+目前底座竖直已确认，J1模型重力矩为0，PASSIVE_IDS=[1]：仅读取，不使能。
+URDF导出的effort/velocity为0，不把它们理解为实际电机能力；控制速度单独配置。
+
+原理（低速准静态近似）
+q_urdf = sign * (encoder_ticks - calibrated_zero_ticks) * 2π/4096
+motor_torque = calibrated_Nm_per_A * (signed_current_A - calibrated_bias_A)
+external_torque_estimate = gravity(q) - motor_torque
+M_virtual * target_acceleration + D * target_velocity = external_torque_estimate（带小死区）
+积分得到位置目标，由舵机模式0跟踪。直接电流反馈仍包含摩擦、惯性、齿轮效率和回驱效应；不是力传感器。
+没有增加刚性回零弹簧，没有自动回零，没有静止超时退出。
+导纳速度/加速度/目标偏移限幅是外环稳定性约束；不是旧版跟随误差停止。
+连续保持/导纳无固定时长。2A为每轴停止阈值，1.8A输出指令实测可被瞬态反馈电流超过。
+电源总电流和舵机电流反馈不是同一测量。
+
+源码参数：GELLO导纳参数.py，所有入口无必需命令行参数。
+
+简化的零位/方向记录（不要求手动精确转到10度）
+先按图A摆放，运行 python GELLO记录URDF零位.py。
+再按图B所示方向分别改变六轴，每轴4～30度即可，运行 python GELLO记录URDF方向.py。
+图B用于确定各轴方向，不把手动转动幅度假定为精确10度。
+底座-Z是否竖直向下仍须确认，在GELLO导纳参数.py设置GRAVITY_DIRECTION_CONFIRMED。
+此简化方案依赖准确摆到URDF零姿态。若零姿态无法摆到，应采用下面的已知角度多姿态拟合方法。
+
+已知角度多姿态拟合与后续辨识次序
+1. 对照 evidence/gello-admittance/urdf-reference-poses.png 确认URDF零姿态和底座-Z重力方向。
+   当前映射要求模式0全角度反馈。不能在模式4断电坐标上直接记录，再用于模式0控制。
+2. 手动摆到一个已知URDF姿态，设置KNOWN_URDF_Q_DEG（默认图中Pose A全0），运行：
+   python GELLO记录URDF姿态.py
+   此脚本只读，不使能、不改硬件零位。记录到 logs/gello_urdf_pose_samples.jsonl。
+3. 再摆一个已知姿态，例如图中Pose B=[10,-10,10,10,10,10]度，修改源码中的KNOWN_URDF_Q_DEG后再次记录。
+   每轴至少8度有效变化，拟合残差不超过1.5度；可增加更多已知姿态。
+   确认实际安装重力方向后设置GRAVITY_DIRECTION_CONFIRMED=True并重新记录。
+   输出 gello-urdf-mapping.json；六轴都verified才用于实机控制。
+   目测摆到10度不足以保证高精度，建议角度量具或准确机械基准；未知姿态不要假填角度。
+4. python GELLO导纳只读检查.py
+   显示实际URDF角度、电流、模型重力矩，不使能。首先验证方向/范围/重力矩变化。
+5. 静态电流辨识：换至少10个不同、能自行保持且无外部托举力的姿态。
+   确认无外力后在源码中设置STATIC_SAMPLE_NO_EXTERNAL_FORCE=True，每个姿态执行：
+   python GELLO采集静态电流.py
+   保持5秒，采最后2秒中位数，之后卸力；未稳定样本不写入辨识集。
+   然后 python GELLO辨识电流力矩.py
+   采用带偏置线性拟合，要求电流/重力矩有足够变化且R²和误差合格。
+   这得到的是基于当前URDF的近似系数，需独立姿态实测验证，不能替代精确力矩传感器标定。
+   重力变化不足的轴无法靠静态重力辨识（通常J1）；会标记inactive，仅位置保持。
+   如需这些轴也参与导纳，必须另外用已知外加力矩标定；不猜测系数、不照搬其他轴。
+6. 标定通过后 python GELLO导纳重力补偿.py
+   六轴中辨识合格的轴运行导纳，未辨识轴与ID7保持当前位置，Ctrl+C卸力。
+
+边界与记录
+峰值电流/温度/通信超时/故障应答仍停止并逐轴卸力。
+不会把0x02磁编码报警屏蔽。最后12条原始应答写入退出报告。
+记录 logs/gello_admittance_*，包括q、电流、g、估算电机力矩、残差和位置目标。
+模型不能增大电机最大力矩，不能保证消除机械卡滞，也不能把已出现的0x02当成已解决。
+离线验证：python -m unittest tools.test_gello_admittance
+
+2026-11-10实机进展
+已复用旧遥操方向并按两套URDF轴定义换算，方向为[-1,+1,+1,+1,-1,+1]。
+J5与图示手动记录的冲突已通过单轴顺时针动作交叉核对；底座竖直由用户确认。
+证据：evidence/gello-admittance/legacy-direction-reconciliation.json及gello-urdf-mapping.json。
+13点自动标定未完成。第三轴实际角度从约56度持续下降，电流多次达到约1.794A。
+7组样本的J2/J3/J4电流-模型力矩线性拟合R²约0.014/0.181/0.00005，不能用作可靠力矩换算。
+此批数据已标记不可用于标定，未生成可用于使能的gello-current-torque.json。
+日志：logs/gello_admittance_scan_20261110_102445_450806/quality_rejected.json。
+实机导纳尚未运行；需要先解决第三轴带载位置控制/减轻负载，并重新获得可靠辨识样本。

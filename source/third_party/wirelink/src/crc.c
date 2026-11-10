@@ -1,0 +1,1142 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+
+#include <stddef.h>
+#include <stdint.h>
+
+#include "wirelink/crc.h"
+#include "wirelink/frame.h"
+
+#include "crc_internal.h"
+
+static const uint16_t WL_CRC16_TABLE[256] = {
+    0x0000u,
+
+    0x1021u,
+
+    0x2042u,
+
+    0x3063u,
+
+    0x4084u,
+
+    0x50A5u,
+
+    0x60C6u,
+
+    0x70E7u,
+
+
+    0x8108u,
+
+    0x9129u,
+
+    0xA14Au,
+
+    0xB16Bu,
+
+    0xC18Cu,
+
+    0xD1ADu,
+
+    0xE1CEu,
+
+    0xF1EFu,
+
+
+    0x1231u,
+
+    0x0210u,
+
+    0x3273u,
+
+    0x2252u,
+
+    0x52B5u,
+
+    0x4294u,
+
+    0x72F7u,
+
+    0x62D6u,
+
+
+    0x9339u,
+
+    0x8318u,
+
+    0xB37Bu,
+
+    0xA35Au,
+
+    0xD3BDu,
+
+    0xC39Cu,
+
+    0xF3FFu,
+
+    0xE3DEu,
+
+
+    0x2462u,
+
+    0x3443u,
+
+    0x0420u,
+
+    0x1401u,
+
+    0x64E6u,
+
+    0x74C7u,
+
+    0x44A4u,
+
+    0x5485u,
+
+
+    0xA56Au,
+
+    0xB54Bu,
+
+    0x8528u,
+
+    0x9509u,
+
+    0xE5EEu,
+
+    0xF5CFu,
+
+    0xC5ACu,
+
+    0xD58Du,
+
+
+    0x3653u,
+
+    0x2672u,
+
+    0x1611u,
+
+    0x0630u,
+
+    0x76D7u,
+
+    0x66F6u,
+
+    0x5695u,
+
+    0x46B4u,
+
+
+    0xB75Bu,
+
+    0xA77Au,
+
+    0x9719u,
+
+    0x8738u,
+
+    0xF7DFu,
+
+    0xE7FEu,
+
+    0xD79Du,
+
+    0xC7BCu,
+
+
+    0x48C4u,
+
+    0x58E5u,
+
+    0x6886u,
+
+    0x78A7u,
+
+    0x0840u,
+
+    0x1861u,
+
+    0x2802u,
+
+    0x3823u,
+
+
+    0xC9CCu,
+
+    0xD9EDu,
+
+    0xE98Eu,
+
+    0xF9AFu,
+
+    0x8948u,
+
+    0x9969u,
+
+    0xA90Au,
+
+    0xB92Bu,
+
+
+    0x5AF5u,
+
+    0x4AD4u,
+
+    0x7AB7u,
+
+    0x6A96u,
+
+    0x1A71u,
+
+    0x0A50u,
+
+    0x3A33u,
+
+    0x2A12u,
+
+
+    0xDBFDu,
+
+    0xCBDCu,
+
+    0xFBBFu,
+
+    0xEB9Eu,
+
+    0x9B79u,
+
+    0x8B58u,
+
+    0xBB3Bu,
+
+    0xAB1Au,
+
+
+    0x6CA6u,
+
+    0x7C87u,
+
+    0x4CE4u,
+
+    0x5CC5u,
+
+    0x2C22u,
+
+    0x3C03u,
+
+    0x0C60u,
+
+    0x1C41u,
+
+
+    0xEDAEu,
+
+    0xFD8Fu,
+
+    0xCDECu,
+
+    0xDDCDu,
+
+    0xAD2Au,
+
+    0xBD0Bu,
+
+    0x8D68u,
+
+    0x9D49u,
+
+
+    0x7E97u,
+
+    0x6EB6u,
+
+    0x5ED5u,
+
+    0x4EF4u,
+
+    0x3E13u,
+
+    0x2E32u,
+
+    0x1E51u,
+
+    0x0E70u,
+
+
+    0xFF9Fu,
+
+    0xEFBEu,
+
+    0xDFDDu,
+
+    0xCFFCu,
+
+    0xBF1Bu,
+
+    0xAF3Au,
+
+    0x9F59u,
+
+    0x8F78u,
+
+
+    0x9188u,
+
+    0x81A9u,
+
+    0xB1CAu,
+
+    0xA1EBu,
+
+    0xD10Cu,
+
+    0xC12Du,
+
+    0xF14Eu,
+
+    0xE16Fu,
+
+
+    0x1080u,
+
+    0x00A1u,
+
+    0x30C2u,
+
+    0x20E3u,
+
+    0x5004u,
+
+    0x4025u,
+
+    0x7046u,
+
+    0x6067u,
+
+
+    0x83B9u,
+
+    0x9398u,
+
+    0xA3FBu,
+
+    0xB3DAu,
+
+    0xC33Du,
+
+    0xD31Cu,
+
+    0xE37Fu,
+
+    0xF35Eu,
+
+
+    0x02B1u,
+
+    0x1290u,
+
+    0x22F3u,
+
+    0x32D2u,
+
+    0x4235u,
+
+    0x5214u,
+
+    0x6277u,
+
+    0x7256u,
+
+
+    0xB5EAu,
+
+    0xA5CBu,
+
+    0x95A8u,
+
+    0x8589u,
+
+    0xF56Eu,
+
+    0xE54Fu,
+
+    0xD52Cu,
+
+    0xC50Du,
+
+
+    0x34E2u,
+
+    0x24C3u,
+
+    0x14A0u,
+
+    0x0481u,
+
+    0x7466u,
+
+    0x6447u,
+
+    0x5424u,
+
+    0x4405u,
+
+
+    0xA7DBu,
+
+    0xB7FAu,
+
+    0x8799u,
+
+    0x97B8u,
+
+    0xE75Fu,
+
+    0xF77Eu,
+
+    0xC71Du,
+
+    0xD73Cu,
+
+
+    0x26D3u,
+
+    0x36F2u,
+
+    0x0691u,
+
+    0x16B0u,
+
+    0x6657u,
+
+    0x7676u,
+
+    0x4615u,
+
+    0x5634u,
+
+
+    0xD94Cu,
+
+    0xC96Du,
+
+    0xF90Eu,
+
+    0xE92Fu,
+
+    0x99C8u,
+
+    0x89E9u,
+
+    0xB98Au,
+
+    0xA9ABu,
+
+
+    0x5844u,
+
+    0x4865u,
+
+    0x7806u,
+
+    0x6827u,
+
+    0x18C0u,
+
+    0x08E1u,
+
+    0x3882u,
+
+    0x28A3u,
+
+
+    0xCB7Du,
+
+    0xDB5Cu,
+
+    0xEB3Fu,
+
+    0xFB1Eu,
+
+    0x8BF9u,
+
+    0x9BD8u,
+
+    0xABBBu,
+
+    0xBB9Au,
+
+
+    0x4A75u,
+
+    0x5A54u,
+
+    0x6A37u,
+
+    0x7A16u,
+
+    0x0AF1u,
+
+    0x1AD0u,
+
+    0x2AB3u,
+
+    0x3A92u,
+
+
+    0xFD2Eu,
+
+    0xED0Fu,
+
+    0xDD6Cu,
+
+    0xCD4Du,
+
+    0xBDAAu,
+
+    0xAD8Bu,
+
+    0x9DE8u,
+
+    0x8DC9u,
+
+
+    0x7C26u,
+
+    0x6C07u,
+
+    0x5C64u,
+
+    0x4C45u,
+
+    0x3CA2u,
+
+    0x2C83u,
+
+    0x1CE0u,
+
+    0x0CC1u,
+
+
+    0xEF1Fu,
+
+    0xFF3Eu,
+
+    0xCF5Du,
+
+    0xDF7Cu,
+
+    0xAF9Bu,
+
+    0xBFBAu,
+
+    0x8FD9u,
+
+    0x9FF8u,
+
+
+    0x6E17u,
+
+    0x7E36u,
+
+    0x4E55u,
+
+    0x5E74u,
+
+    0x2E93u,
+
+    0x3EB2u,
+
+    0x0ED1u,
+
+    0x1EF0u
+
+};
+
+static const uint32_t WL_CRC32_TABLE[256] = {
+    0x00000000u,
+
+    0xF26B8303u,
+
+    0xE13B70F7u,
+
+    0x1350F3F4u,
+
+    0xC79A971Fu,
+
+    0x35F1141Cu,
+
+    0x26A1E7E8u,
+
+    0xD4CA64EBu,
+
+
+    0x8AD958CFu,
+
+    0x78B2DBCCu,
+
+    0x6BE22838u,
+
+    0x9989AB3Bu,
+
+    0x4D43CFD0u,
+
+    0xBF284CD3u,
+
+    0xAC78BF27u,
+
+    0x5E133C24u,
+
+
+    0x105EC76Fu,
+
+    0xE235446Cu,
+
+    0xF165B798u,
+
+    0x030E349Bu,
+
+    0xD7C45070u,
+
+    0x25AFD373u,
+
+    0x36FF2087u,
+
+    0xC494A384u,
+
+
+    0x9A879FA0u,
+
+    0x68EC1CA3u,
+
+    0x7BBCEF57u,
+
+    0x89D76C54u,
+
+    0x5D1D08BFu,
+
+    0xAF768BBCu,
+
+    0xBC267848u,
+
+    0x4E4DFB4Bu,
+
+
+    0x20BD8EDEu,
+
+    0xD2D60DDDu,
+
+    0xC186FE29u,
+
+    0x33ED7D2Au,
+
+    0xE72719C1u,
+
+    0x154C9AC2u,
+
+    0x061C6936u,
+
+    0xF477EA35u,
+
+
+    0xAA64D611u,
+
+    0x580F5512u,
+
+    0x4B5FA6E6u,
+
+    0xB93425E5u,
+
+    0x6DFE410Eu,
+
+    0x9F95C20Du,
+
+    0x8CC531F9u,
+
+    0x7EAEB2FAu,
+
+
+    0x30E349B1u,
+
+    0xC288CAB2u,
+
+    0xD1D83946u,
+
+    0x23B3BA45u,
+
+    0xF779DEAEu,
+
+    0x05125DADu,
+
+    0x1642AE59u,
+
+    0xE4292D5Au,
+
+
+    0xBA3A117Eu,
+
+    0x4851927Du,
+
+    0x5B016189u,
+
+    0xA96AE28Au,
+
+    0x7DA08661u,
+
+    0x8FCB0562u,
+
+    0x9C9BF696u,
+
+    0x6EF07595u,
+
+
+    0x417B1DBCu,
+
+    0xB3109EBFu,
+
+    0xA0406D4Bu,
+
+    0x522BEE48u,
+
+    0x86E18AA3u,
+
+    0x748A09A0u,
+
+    0x67DAFA54u,
+
+    0x95B17957u,
+
+
+    0xCBA24573u,
+
+    0x39C9C670u,
+
+    0x2A993584u,
+
+    0xD8F2B687u,
+
+    0x0C38D26Cu,
+
+    0xFE53516Fu,
+
+    0xED03A29Bu,
+
+    0x1F682198u,
+
+
+    0x5125DAD3u,
+
+    0xA34E59D0u,
+
+    0xB01EAA24u,
+
+    0x42752927u,
+
+    0x96BF4DCCu,
+
+    0x64D4CECFu,
+
+    0x77843D3Bu,
+
+    0x85EFBE38u,
+
+
+    0xDBFC821Cu,
+
+    0x2997011Fu,
+
+    0x3AC7F2EBu,
+
+    0xC8AC71E8u,
+
+    0x1C661503u,
+
+    0xEE0D9600u,
+
+    0xFD5D65F4u,
+
+    0x0F36E6F7u,
+
+
+    0x61C69362u,
+
+    0x93AD1061u,
+
+    0x80FDE395u,
+
+    0x72966096u,
+
+    0xA65C047Du,
+
+    0x5437877Eu,
+
+    0x4767748Au,
+
+    0xB50CF789u,
+
+
+    0xEB1FCBADu,
+
+    0x197448AEu,
+
+    0x0A24BB5Au,
+
+    0xF84F3859u,
+
+    0x2C855CB2u,
+
+    0xDEEEDFB1u,
+
+    0xCDBE2C45u,
+
+    0x3FD5AF46u,
+
+
+    0x7198540Du,
+
+    0x83F3D70Eu,
+
+    0x90A324FAu,
+
+    0x62C8A7F9u,
+
+    0xB602C312u,
+
+    0x44694011u,
+
+    0x5739B3E5u,
+
+    0xA55230E6u,
+
+
+    0xFB410CC2u,
+
+    0x092A8FC1u,
+
+    0x1A7A7C35u,
+
+    0xE811FF36u,
+
+    0x3CDB9BDDu,
+
+    0xCEB018DEu,
+
+    0xDDE0EB2Au,
+
+    0x2F8B6829u,
+
+
+    0x82F63B78u,
+
+    0x709DB87Bu,
+
+    0x63CD4B8Fu,
+
+    0x91A6C88Cu,
+
+    0x456CAC67u,
+
+    0xB7072F64u,
+
+    0xA457DC90u,
+
+    0x563C5F93u,
+
+
+    0x082F63B7u,
+
+    0xFA44E0B4u,
+
+    0xE9141340u,
+
+    0x1B7F9043u,
+
+    0xCFB5F4A8u,
+
+    0x3DDE77ABu,
+
+    0x2E8E845Fu,
+
+    0xDCE5075Cu,
+
+
+    0x92A8FC17u,
+
+    0x60C37F14u,
+
+    0x73938CE0u,
+
+    0x81F80FE3u,
+
+    0x55326B08u,
+
+    0xA759E80Bu,
+
+    0xB4091BFFu,
+
+    0x466298FCu,
+
+
+    0x1871A4D8u,
+
+    0xEA1A27DBu,
+
+    0xF94AD42Fu,
+
+    0x0B21572Cu,
+
+    0xDFEB33C7u,
+
+    0x2D80B0C4u,
+
+    0x3ED04330u,
+
+    0xCCBBC033u,
+
+
+    0xA24BB5A6u,
+
+    0x502036A5u,
+
+    0x4370C551u,
+
+    0xB11B4652u,
+
+    0x65D122B9u,
+
+    0x97BAA1BAu,
+
+    0x84EA524Eu,
+
+    0x7681D14Du,
+
+
+    0x2892ED69u,
+
+    0xDAF96E6Au,
+
+    0xC9A99D9Eu,
+
+    0x3BC21E9Du,
+
+    0xEF087A76u,
+
+    0x1D63F975u,
+
+    0x0E330A81u,
+
+    0xFC588982u,
+
+
+    0xB21572C9u,
+
+    0x407EF1CAu,
+
+    0x532E023Eu,
+
+    0xA145813Du,
+
+    0x758FE5D6u,
+
+    0x87E466D5u,
+
+    0x94B49521u,
+
+    0x66DF1622u,
+
+
+    0x38CC2A06u,
+
+    0xCAA7A905u,
+
+    0xD9F75AF1u,
+
+    0x2B9CD9F2u,
+
+    0xFF56BD19u,
+
+    0x0D3D3E1Au,
+
+    0x1E6DCDEEu,
+
+    0xEC064EEDu,
+
+
+    0xC38D26C4u,
+
+    0x31E6A5C7u,
+
+    0x22B65633u,
+
+    0xD0DDD530u,
+
+    0x0417B1DBu,
+
+    0xF67C32D8u,
+
+    0xE52CC12Cu,
+
+    0x1747422Fu,
+
+
+    0x49547E0Bu,
+
+    0xBB3FFD08u,
+
+    0xA86F0EFCu,
+
+    0x5A048DFFu,
+
+    0x8ECEE914u,
+
+    0x7CA56A17u,
+
+    0x6FF599E3u,
+
+    0x9D9E1AE0u,
+
+
+    0xD3D3E1ABu,
+
+    0x21B862A8u,
+
+    0x32E8915Cu,
+
+    0xC083125Fu,
+
+    0x144976B4u,
+
+    0xE622F5B7u,
+
+    0xF5720643u,
+
+    0x07198540u,
+
+
+    0x590AB964u,
+
+    0xAB613A67u,
+
+    0xB831C993u,
+
+    0x4A5A4A90u,
+
+    0x9E902E7Bu,
+
+    0x6CFBAD78u,
+
+    0x7FAB5E8Cu,
+
+    0x8DC0DD8Fu,
+
+
+    0xE330A81Au,
+
+    0x115B2B19u,
+
+    0x020BD8EDu,
+
+    0xF0605BEEu,
+
+    0x24AA3F05u,
+
+    0xD6C1BC06u,
+
+    0xC5914FF2u,
+
+    0x37FACCF1u,
+
+
+    0x69E9F0D5u,
+
+    0x9B8273D6u,
+
+    0x88D28022u,
+
+    0x7AB90321u,
+
+    0xAE7367CAu,
+
+    0x5C18E4C9u,
+
+    0x4F48173Du,
+
+    0xBD23943Eu,
+
+
+    0xF36E6F75u,
+
+    0x0105EC76u,
+
+    0x12551F82u,
+
+    0xE03E9C81u,
+
+    0x34F4F86Au,
+
+    0xC69F7B69u,
+
+    0xD5CF889Du,
+
+    0x27A40B9Eu,
+
+
+    0x79B737BAu,
+
+    0x8BDCB4B9u,
+
+    0x988C474Du,
+
+    0x6AE7C44Eu,
+
+    0xBE2DA0A5u,
+
+    0x4C4623A6u,
+
+    0x5F16D052u,
+
+    0xAD7D5351u
+
+};
+
+uint16_t wl_crc16_ccitt_false_update(uint16_t state, const uint8_t *data,
+                                     size_t length) {
+  for (size_t i = 0U; i < length; ++i) {
+    state = (uint16_t)((state << 8u) ^
+                       WL_CRC16_TABLE[(uint8_t)((state >> 8u) ^ data[i])]);
+  }
+  return state;
+}
+
+uint32_t wl_crc32c_update(uint32_t state, const uint8_t *data, size_t length) {
+  for (size_t i = 0U; i < length; ++i) {
+    state = WL_CRC32_TABLE[(uint8_t)(state ^ data[i])] ^ (state >> 8u);
+  }
+  return state;
+}
+
+uint16_t wl_crc16_ccitt_false(const uint8_t *data, size_t length) {
+  if (data == NULL && length != 0U) {
+    return 0;
+  }
+  return wl_crc16_ccitt_false_update(0xFFFFu, data, length);
+}
+
+uint32_t wl_crc32c(const uint8_t *data, size_t length) {
+  if (data == NULL && length != 0U) {
+    return 0;
+  }
+  return wl_crc32c_update(0xFFFFFFFFu, data, length) ^ 0xFFFFFFFFu;
+}
+
+size_t wl_crc_size_bytes(uint8_t integrity_selector) {
+  switch (integrity_selector) {
+  case WL_INTEGRITY_CRC16:
+    return 2U;
+  case WL_INTEGRITY_CRC32:
+    return 4U;
+  default:
+    return 0U;
+  }
+}

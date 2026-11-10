@@ -1,0 +1,6 @@
+@echo off
+set "ZEPHYR_BASE=C:\Users\KelvinLM\Documents\ClionProjects\zephyr-workspace\zephyr"
+set "ZEPHYR_SDK_INSTALL_DIR=C:\Users\KelvinLM\Documents\ClionProjects\zephyr-workspace\sdk\zephyr-sdk-1.0.1"
+set "ZEPHYR_TOOLCHAIN_VARIANT=zephyr"
+set "PATH=C:\Users\KelvinLM\AppData\Local\Programs\Python\Python312\Scripts\;C:\Users\KelvinLM\AppData\Local\Programs\Python\Python312\;C:\Users\KelvinLM\AppData\Local\Programs\Python\Launcher\;C:\Users\KelvinLM\AppData\Local\Microsoft\WindowsApps;C:\Users\KelvinLM\AppData\Local\Microsoft\WinGet\Packages\Ninja-build.Ninja_Microsoft.Winget.Source_8wekyb3d8bbwe;C:\Users\KelvinLM\AppData\Local\Microsoft\WinGet\Packages\oss-winget.gperf_Microsoft.Winget.Source_8wekyb3d8bbwe;C:\Program Files\7-Zip;C:\Users\KelvinLM\AppData\Local\Microsoft\WinGet\Packages\GNU.Wget2_Microsoft.Winget.Source_8wekyb3d8bbwe;C:\Users\KelvinLM\AppData\Local\Microsoft\WinGet\Packages\oss-winget.dtc_Microsoft.Winget.Source_8wekyb3d8bbwe\usr\bin;;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Program Files\Git\cmd;C:\Program Files\CMake\bin;%PATH%"
+call "C:\Users\KelvinLM\Documents\ClionProjects\zephyr-workspace\.venv\Scripts\activate.bat"

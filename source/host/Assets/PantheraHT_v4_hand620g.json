@@ -1,0 +1,22 @@
+{
+  "source_sha256": "5d2f31ff8249efeb792b3ea888f299d3d54321c0c3bf07c2c12bf0e29afed218",
+  "derived_sha256": "4794123c04aad589c32c73d13ce29971bb4245c4a5b13ad796cadbd64783ce25",
+  "bare_link6_mass_kg": 0.00918329,
+  "tool_mass_kg": 0.62,
+  "link6_aggregate_mass_kg": 0.62918329,
+  "provisional_aggregate_com_m": [
+    0.04697283701703014,
+    0.011537630531354842,
+    -0.03325302598045876
+  ],
+  "com_source": "Old v4 aggregate COM retained only as initial guess; not measured for current hand.",
+  "adapter_mass": "Unknown whether included in user approximate 620g. Final link6 fit absorbs attached rigid assembly.",
+  "fixed_links": [
+    "link1",
+    "link2",
+    "link3",
+    "link4",
+    "link5"
+  ],
+  "fit_scope": "link6 mass and first moments only"
+}

@@ -1,0 +1,2 @@
+Source: ../GELLO主手速度读取_更新包/MJC-Dishwasher_Gello遥操/gello/{reader,protocol}.py
+Change: reader clock uses time.perf_counter() for high-resolution Windows timing; serial requests remain position/velocity register reads only.

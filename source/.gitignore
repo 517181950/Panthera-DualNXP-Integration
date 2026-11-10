@@ -1,0 +1,14 @@
+build/
+.idea/
+cmake-build-*/
+# Local physical-demo captures
+host/test_demo/logs/
+
+build-network/
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.pytest_cache/
+host/examples/logs/
+*.log

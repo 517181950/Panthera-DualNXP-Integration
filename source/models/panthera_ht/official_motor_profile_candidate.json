@@ -1,0 +1,49 @@
+{
+  "source_commit": "7c506f88155109eccb156287b4a1263f5e8b8ed0",
+  "verified_against_user_hardware": false,
+  "source": "panthera_python/robot_param/motor_param/6dof_Panthera_params_follower.yaml",
+  "joints": [
+    {
+      "id": 1,
+      "joint": "joint1",
+      "official_standard_motor_model": "5047_36",
+      "encoder_zero_offset_rad": null,
+      "encoder_direction": null
+    },
+    {
+      "id": 2,
+      "joint": "joint2",
+      "official_standard_motor_model": "6056_36",
+      "encoder_zero_offset_rad": null,
+      "encoder_direction": null
+    },
+    {
+      "id": 3,
+      "joint": "joint3",
+      "official_standard_motor_model": "6056_36",
+      "encoder_zero_offset_rad": null,
+      "encoder_direction": null
+    },
+    {
+      "id": 4,
+      "joint": "joint4",
+      "official_standard_motor_model": "5047_36",
+      "encoder_zero_offset_rad": null,
+      "encoder_direction": null
+    },
+    {
+      "id": 5,
+      "joint": "joint5",
+      "official_standard_motor_model": "4438_30",
+      "encoder_zero_offset_rad": null,
+      "encoder_direction": null
+    },
+    {
+      "id": 6,
+      "joint": "joint6",
+      "official_standard_motor_model": "4438_30",
+      "encoder_zero_offset_rad": null,
+      "encoder_direction": null
+    }
+  ]
+}

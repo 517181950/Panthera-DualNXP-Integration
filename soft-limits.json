@@ -1,0 +1,40 @@
+{
+  "lower_deg": [
+    -155,
+    0,
+    0,
+    -90,
+    -100,
+    -160
+  ],
+  "upper_deg": [
+    155,
+    180,
+    240.64227395494575,
+    90,
+    100,
+    160
+  ],
+  "velocity_deg_s": [
+    15,
+    15,
+    15,
+    15,
+    15,
+    15
+  ],
+  "acceleration_deg_s2": [
+    30,
+    30,
+    30,
+    30,
+    30,
+    30
+  ],
+  "exponent": 6,
+  "target_gain_s": 4,
+  "feedback_age_ms": 20,
+  "max_period_ms": 20,
+  "prediction_ms": 20,
+  "reference_filter": false
+}

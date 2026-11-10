@@ -1,0 +1,42 @@
+[
+  {
+    "Algorithm": "SHA256",
+    "Hash": "BB6E5D932B788F438BA2EC64B71A3D36A71BB407EC88C9B8BFB646965D7D8748",
+    "Path": "C:\\Users\\KelvinLM\\Documents\\ClionProjects\\FRDM-MCXN947-L1-Hand-PantheraHT\\firmware-backups\\before_overlay_fix_20261030_191502\\build\\zephyr.bin"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "9335742CCAA391CCC1A55EDA05A968D1D90F726D64838A254080D3FF28C9C76C",
+    "Path": "C:\\Users\\KelvinLM\\Documents\\ClionProjects\\FRDM-MCXN947-L1-Hand-PantheraHT\\firmware-backups\\before_overlay_fix_20261030_191502\\build\\zephyr.elf"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "1E4F207152B7693228563820CF4F7C06E611BBA6572A8F5F6EF5BB5D09C2E0E0",
+    "Path": "C:\\Users\\KelvinLM\\Documents\\ClionProjects\\FRDM-MCXN947-L1-Hand-PantheraHT\\firmware-backups\\before_overlay_fix_20261030_191502\\build\\zephyr.hex"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "DDE54795E72C9BBC9DA19AFFEC026AA6DE1B759E05C26266B7BCA2B48F566986",
+    "Path": "C:\\Users\\KelvinLM\\Documents\\ClionProjects\\FRDM-MCXN947-L1-Hand-PantheraHT\\firmware-backups\\before_overlay_fix_20261030_191502\\build\\zephyr.map"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "76F73A82404A48D1C9C6259212FA9CB35B35FAC0D7F01C562388429DED1B1292",
+    "Path": "C:\\Users\\KelvinLM\\Documents\\ClionProjects\\FRDM-MCXN947-L1-Hand-PantheraHT\\firmware-backups\\before_overlay_fix_20261030_191502\\build-network\\zephyr.bin"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "BF16CF58EB6C4450F4213C21C49A1271ADA9926B6F88CA2CF0FEE212E1B95726",
+    "Path": "C:\\Users\\KelvinLM\\Documents\\ClionProjects\\FRDM-MCXN947-L1-Hand-PantheraHT\\firmware-backups\\before_overlay_fix_20261030_191502\\build-network\\zephyr.elf"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "C90CD2AD483F253DBB66FCA1B24874A4058803A41107F439D34F1B9EEF3D65CB",
+    "Path": "C:\\Users\\KelvinLM\\Documents\\ClionProjects\\FRDM-MCXN947-L1-Hand-PantheraHT\\firmware-backups\\before_overlay_fix_20261030_191502\\build-network\\zephyr.hex"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "92E5326221F349000AC4C3C324CA9FF7F292A256045CBCD16273487BB8DE8EFC",
+    "Path": "C:\\Users\\KelvinLM\\Documents\\ClionProjects\\FRDM-MCXN947-L1-Hand-PantheraHT\\firmware-backups\\before_overlay_fix_20261030_191502\\build-network\\zephyr.map"
+  }
+]

@@ -1,0 +1,21 @@
+Hand CAN selection (2026-10-30)
+
+OperationRequest operation=16, target_mask=0 disables all outgoing hand CAN
+traffic; target_mask=1 restores it. Reject values above 1 and requests from
+another lease owner. This operation does not claim or activate the arm.
+
+The selection persists across stream start/stop and control release. Reset
+restores the original enabled default. Disabling clears pending mode requests,
+one-shot reads and received hand commands; already queued CAN frames may finish.
+The CAN task then skips hand queries, mode writes/readback, auxiliary reads and
+control. A final hand-ID filter in send() also rejects hand frames when disabled.
+Arm scheduling is unchanged. Diagnostics.hand_state_query_mode=4 means disabled.
+
+Example 18 explicitly selects disabled with --no-hand, or enabled without it,
+before starting state streaming. Firmware lacking operation 16 is rejected
+instead of silently continuing to poll a disconnected hand. After a bare-arm
+run, run example 18 without --no-hand or reset the board to restore hand access.
+
+Build: build.cmd. Flash separately: flash.cmd. No firmware flash or hardware
+motion was performed as part of preparing this change. Python lifecycle tests
+cover off/on selection ordering and rejection of unsupported firmware.

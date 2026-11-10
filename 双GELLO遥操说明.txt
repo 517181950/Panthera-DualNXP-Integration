@@ -1,0 +1,64 @@
+双GELLO共总线遥操（2026-11-09）
+
+接线与映射
+两个GELLO共用一条飞特舵机总线、一个微雪适配器，经原臂node12的J11 USB接入。
+原GELLO：IDs1–7（group=0）→ 原臂right/node12与原手。
+第二GELLO：IDs11–17（group=1）→ 新臂left/node11与新手。
+两个GELLO的舵机ID不能重复。本程序仅读位置/速度，不自动修改舵机ID、零位或扭矩。
+第二套ID、方向和零位仍须现场确认，不根据两套外观相同推断标定相同。
+新臂node11不需要为此接第二个USB适配器或更新GELLO固件。
+
+运行入口
+python 双GELLO遥操.py --dry-run    # 仅显示配置，不连接硬件
+python 双GELLO遥操.py              # 会执行原有机械臂回零，再等待每个GELLO回到保存零位
+python 双GELLO遥操.py --side left  # 只运行第二GELLO对应的新臂
+参数：运行参数.py 的 DUAL_GELLO_CONFIG，机械臂参数继承 TELEOP_CONFIG。
+双臂遥操.py 保留原来的单GELLO带双臂模式。
+
+两组有独立零位、扳机端点、方向映射、首次零位就绪状态和掉线保持。
+一组输入失效，仅该侧保持失效时的实测位置；另一组仍按自己的输入跟随。
+某侧扳机失效时，该手在下一次手控制周期保持实测位置，不复制另一侧扳机目标。
+重新收到有效输入后沿用现有自动恢复跟随行为，恢复时主手和从臂位置差可能产生目标变化。
+机械臂反馈故障或板端接管仍触发现有双侧退出/柔顺保持流程；Ctrl+C同样请求两侧柔顺保持。
+沿用已有回零、独立增益、重力模型、软限位和50ms目标超时保护。
+两个主手共用一个采集线程/套接字，不会有两个线程争抢同一串口。
+日志：logs/two_gello_two_arms_*/dual_targets.csv，按side记录目标、扳机与发送序号。
+每侧原有raw.csv、summary.json及共享hands.csv、soft_limits.csv仍保存。
+
+固件
+bash build-dual-gello.sh right
+构建目录：build-right-dual-gello；候选镜像和校验：evidence/dual-gello/。
+只开启node12的双组只读采集；没有自动烧录。
+CONFIG_ROBOT_GELLO_DUAL=y时交替读取两组，避免总是先读完整一组再读另一组。
+GQ02/GS02一次返回14节点；旧GQ01/GS01仍只返回IDs1–7，兼容旧入口。
+单组固件不会响应旧协议之外的双组请求，须部署候选后才能读取第二组。
+采集速度受14节点、USB和总线响应影响；500Hz是主机控制调度目标，不是每组实测采样率。
+每个节点年龄包含UDP往返时间，读取线程不因网络回复而刷新旧舵机数据。
+
+部署后先只读检查（不发臂手命令）
+python tools/watch-board-gello.py --side right --group-mask 3 --seconds 10
+应能看到group0 IDs1–7、group1 IDs11–17，两个valid都为true。
+启动遥操前要求选中的两组七节点都有效。第二组缺失时不会用第一组代替。
+
+第二GELLO标定
+现有原GELLO仍使用 gello-single-arm.json 的 left 配置。
+第二GELLO使用新的 gello-left.json 的 left 配置；文件由下述采样工具生成。
+profile_group名称独立于舵机group编号和机械臂侧别，不能据名称自动交换两臂。
+标定工具只读取GELLO，不打开机械臂Session、不发送运动指令。
+每次保持指定姿态，工具等待3秒后采样1秒；数据不足或抖动会报告失败。
+1. 保持第二GELLO在六轴参考零位，运行：
+   python tools/calibrate-gello.py --side left --stage zero --signs S1 S2 S3 S4 S5 S6
+   将S1..S6替换为六个已确认的+1/-1方向乘子。不要直接复制另一GELLO的方向。
+   乘子作用于原驱动的SERVO_SIGNS；必须逐轴核对最终目标正负。
+2. 完全松开扳机：
+   python tools/calibrate-gello.py --side left --stage open
+3. 完全按下扳机：
+   python tools/calibrate-gello.py --side left --stage closed
+扳机端点按短弧解卷，支持跨4095/0；本工具假定扳机行程小于半圈。
+覆盖已有标定前自动保存带时间的.bak；zero/open/closed三项齐备后才可用于遥操。
+
+当前验收范围
+离线检查覆盖独立路由、共总线单连接、零位门槛、单组掉线、扳机保持、清理退出、
+C/Python协议兼容、旧单组协议、UDP回环和双目标/双手的完整主机控制循环。
+已构建node12双GELLO候选，尚未烧录，也未进行实机双主手跟随验收。
+现场还需确认第二组ID、独立方向/零位/扳机标定，以及两组的采样率与反馈年龄。

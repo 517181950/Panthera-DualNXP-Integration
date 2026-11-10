@@ -1,0 +1,14 @@
+Current wire schema7: use matching firmware and host SDK.
+J1..J6 motor IDs0x11..0x16; hand ID0x08.
+Hand motion startup uses Robot.prepare_hand_mode(2), waits mode ACK and new readback. State monitor is read-only.
+Removed obsolete J4 mode-switch branch; a hand mode change no longer changes any arm mode.
+Full-state0A00 is opt-in checksum compatibility: exactID0x1083C,64-byte shape,60 logical bytes,zero padding,standard sum OR captured fixed+0x24 checksum.12 captured vectors pass; changed bytes are rejected.
+500Hz six-axis zero MIT feedback works. Hand500Hz control+full read has NOT passed; native TX differs from PC TX and hand later lost replies.
+After hand power cycle, fixed1000ms segments restored two complete open/close cycles with fresh feedback. No background trajectory is running.
+Factory torque scaling from official PantheraHT model config and v3.1.2 conversion table is applied to all6 axes; individual hardware calibration not performed.
+Detailed evidence: C:\Users\KelvinLM\Documents\Codex\2026-10-29\ni-k\outputs\new-id-hand-segments-restored
+
+Latest verified working baseline: hand50Hz endpoint+remaining-time controls,50Hz angle-only0A03 polling; arm six axes500Hz zero MIT and feedback.12s six complete open/close cycles observed in angle samples; zero query timeouts and zero negative control ACKs.
+Direct Run host/examples/3_bus-load-zero-mit-hand.py uses this profile. Hand control observed49.08Hz, angle feedback50.00Hz, each arm feedback500.00Hz. No background trajectory remains.
+Startup verifies fresh mode readback, even if positive ACK lost; explicit negative ACK still fails.
+Evidence: C:\Users\KelvinLM\Documents\Codex\2026-10-29\ni-k\outputs\working-hand50-arm500

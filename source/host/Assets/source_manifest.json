@@ -1,0 +1,447 @@
+{
+  "repository": "HighTorque-Robotics/Panthera-HT_SDK",
+  "commit": "7c506f88155109eccb156287b4a1263f5e8b8ed0",
+  "source_url": "https://github.com/HighTorque-Robotics/Panthera-HT_SDK/blob/7c506f88155109eccb156287b4a1263f5e8b8ed0/panthera_python/Panthera-HT_description_V1.1.0/urdf/Panthera-HT_description_V1.1.0_follower.urdf",
+  "model": "PantheraHT V1.1.0 follower, not PantheraHT_S",
+  "derived_model": "arm-only, original gripper subtree removed",
+  "removed_links": [
+    "gripper_center_link",
+    "gripper_L_link",
+    "gripper_R_link"
+  ],
+  "removed_upstream_mass_kg": 0.38,
+  "joint_count": 6,
+  "links": [
+    {
+      "name": "base_link",
+      "mass_kg": 1.26174391,
+      "inertial_origin": {
+        "xyz": "-0.00199372 0.00013575 0.02313639",
+        "rpy": "0 0 0"
+      },
+      "inertia_kg_m2": {
+        "ixx": 0.00149111,
+        "ixy": -1.64e-06,
+        "ixz": -2.283e-05,
+        "iyy": 0.00152128,
+        "iyz": 6.64e-06,
+        "izz": 0.00208055
+      }
+    },
+    {
+      "name": "link1",
+      "mass_kg": 0.31947644,
+      "inertial_origin": {
+        "xyz": "0.00370227 -0.00052950 0.02551045",
+        "rpy": "0 0 0"
+      },
+      "inertia_kg_m2": {
+        "ixx": 0.00047321,
+        "ixy": 1.61e-06,
+        "ixz": -4.947e-05,
+        "iyy": 0.00026806,
+        "iyz": 5.65e-06,
+        "izz": 0.00042904
+      }
+    },
+    {
+      "name": "link2",
+      "mass_kg": 1.54644014,
+      "inertial_origin": {
+        "xyz": "-0.12846526 -0.00246834 0.00013928",
+        "rpy": "0 0 0"
+      },
+      "inertia_kg_m2": {
+        "ixx": 0.0004572,
+        "ixy": -9.86e-06,
+        "ixz": -3.775e-05,
+        "iyy": 0.0229913,
+        "iyz": -1e-06,
+        "izz": 0.02311093
+      }
+    },
+    {
+      "name": "link3",
+      "mass_kg": 0.7384304,
+      "inertial_origin": {
+        "xyz": "0.15998653 -0.00127693 0.05180598",
+        "rpy": "0 0 0"
+      },
+      "inertia_kg_m2": {
+        "ixx": 0.00074253,
+        "ixy": 5.334e-05,
+        "ixz": -0.00093687,
+        "iyy": 0.00637135,
+        "iyz": 9.56e-06,
+        "izz": 0.00627135
+      }
+    },
+    {
+      "name": "link4",
+      "mass_kg": 0.3,
+      "inertial_origin": {
+        "xyz": "0.05302276 -0.00088874 0.04176746",
+        "rpy": "0 0 0"
+      },
+      "inertia_kg_m2": {
+        "ixx": 0.00029159,
+        "ixy": -9.62e-06,
+        "ixz": -0.00019916,
+        "iyy": 0.00045145,
+        "iyz": -7.75e-06,
+        "izz": 0.00039654
+      }
+    },
+    {
+      "name": "link5",
+      "mass_kg": 0.27262012,
+      "inertial_origin": {
+        "xyz": "0.00389691 -0.00007055 -0.03465562",
+        "rpy": "0 0 0"
+      },
+      "inertia_kg_m2": {
+        "ixx": 4.614e-05,
+        "ixy": 3e-08,
+        "ixz": 3.76e-06,
+        "iyy": 5.344e-05,
+        "iyz": -1.2e-07,
+        "izz": 3.117e-05
+      }
+    },
+    {
+      "name": "link6",
+      "mass_kg": 0.00918329,
+      "inertial_origin": {
+        "xyz": "0.00246634 0.00000000 0.00064746",
+        "rpy": "0 0 0"
+      },
+      "inertia_kg_m2": {
+        "ixx": 1.19e-06,
+        "ixy": 0.0,
+        "ixz": 0.0,
+        "iyy": 6.6e-07,
+        "iyz": 0.0,
+        "izz": 5.6e-07
+      }
+    }
+  ],
+  "joints": [
+    {
+      "name": "joint1",
+      "parent": "base_link",
+      "child": "link1",
+      "axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "origin": {
+        "xyz": "0 0 0.0584000000000033",
+        "rpy": "0 0 0"
+      },
+      "upstream_limit_metadata": {
+        "lower": "-2.705260340591",
+        "upper": "2.705260340591",
+        "effort": "21",
+        "velocity": "7.853981633974"
+      }
+    },
+    {
+      "name": "joint2",
+      "parent": "link1",
+      "child": "link2",
+      "axis": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "origin": {
+        "xyz": "0.0181985117133034 0 0.0534999999999806",
+        "rpy": "0 0 0"
+      },
+      "upstream_limit_metadata": {
+        "lower": "0.000000000000",
+        "upper": "3.141592653590",
+        "effort": "36",
+        "velocity": "6.283185307180"
+      }
+    },
+    {
+      "name": "joint3",
+      "parent": "link2",
+      "child": "link3",
+      "axis": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "origin": {
+        "xyz": "-0.259999999999987 0 0",
+        "rpy": "0 0 0"
+      },
+      "upstream_limit_metadata": {
+        "lower": "0.0",
+        "upper": "4.2",
+        "effort": "36",
+        "velocity": "6.283185307180"
+      }
+    },
+    {
+      "name": "joint4",
+      "parent": "link3",
+      "child": "link4",
+      "axis": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "origin": {
+        "xyz": "0.230000000000164 0 0.0599999999994667",
+        "rpy": "0 0 0"
+      },
+      "upstream_limit_metadata": {
+        "lower": "-1.570796326795",
+        "upper": "1.570796326795",
+        "effort": "21",
+        "velocity": "7.853981633974"
+      }
+    },
+    {
+      "name": "joint5",
+      "parent": "link4",
+      "child": "link5",
+      "axis": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "origin": {
+        "xyz": "0.0699999999999991 -0.000450862561756094 0.034989137438241",
+        "rpy": "0 0 0"
+      },
+      "upstream_limit_metadata": {
+        "lower": "-1.745329251994",
+        "upper": "1.745329251994",
+        "effort": "10",
+        "velocity": "16.755160819146"
+      }
+    },
+    {
+      "name": "joint6",
+      "parent": "link5",
+      "child": "link6",
+      "axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "origin": {
+        "xyz": "0.0249500000000002 0 -0.0374999999999997",
+        "rpy": "0 0 0"
+      },
+      "upstream_limit_metadata": {
+        "lower": "-2.792526803191",
+        "upper": "2.792526803191",
+        "effort": "10",
+        "velocity": "16.755160819146"
+      }
+    }
+  ],
+  "files": [
+    {
+      "path": "LICENSE",
+      "git_blob_sha": "4e2cdb2799a7f642a677f8a113a7c8d2bdd0a276",
+      "sha256": "7b953e339ea4814e828f279dff99b752e6bb649743ddaa89d9ec06d8bcd2afe7",
+      "bytes": 1076
+    },
+    {
+      "path": "panthera_python/Panthera-HT_description_V1.1.0/urdf/Panthera-HT_description_V1.1.0.csv",
+      "git_blob_sha": "a92b017297808dd2bbcb620cd460e5f7030a12c4",
+      "sha256": "139242e936022ba6904c8a22a29f3b49a588d2f0b5ff2dd261e31d7f42f30482",
+      "bytes": 6104
+    },
+    {
+      "path": "panthera_python/Panthera-HT_description_V1.1.0/urdf/Panthera-HT_description_V1.1.0_follower.urdf",
+      "git_blob_sha": "886b6fe3b8ddf01a012443f407ccdd9c75f47919",
+      "sha256": "c0c843f4d1b65af8bff8722f4017f3841d69b82d9131b2cb10a4e587ac4eb5b2",
+      "bytes": 11132
+    },
+    {
+      "path": "panthera_python/Panthera-HT_description_V1.1.0/urdf/Panthera-HT_description_V1.1.0_leader.urdf",
+      "git_blob_sha": "09364a1eaa991b064e265a5eedfca1e5e0d45bc1",
+      "sha256": "df1dcd9f3eba48a207495c6d288a54a5b6bc181c7c38238a49ac05de1bc44545",
+      "bytes": 11129
+    },
+    {
+      "path": "panthera_python/Panthera-HT_description_V1.1.0/urdf/README.md",
+      "git_blob_sha": "3eebdcc493d597bae268af13600cdef476cdb82d",
+      "sha256": "578e71e00253be869dd7e6c7baeb1475fa08a86bad882518004979a47bbd6bba",
+      "bytes": 4352
+    },
+    {
+      "path": "panthera_python/robot_param/motor_param/6dof_Panthera_params_follower.yaml",
+      "git_blob_sha": "fdf1b1ccf58302e57684dd754c7bee189784d8de",
+      "sha256": "fb7808094c6089522e17c6e2ab5810da2653ee8750a4cd602a056c98df25beaa",
+      "bytes": 3204
+    },
+    {
+      "path": "panthera_python/robot_param/motor_param/6dof_Panthera_params_leader.yaml",
+      "git_blob_sha": "2c39c93ef1ab27def3191e43178ae1da936ab4b1",
+      "sha256": "c0e883d8c237b36cb792066c5691a3d1943d11f362e3d4ae63a94a9744dc7117",
+      "bytes": 3189
+    },
+    {
+      "path": "panthera_python/robot_param/motor_param/motor_1.yaml",
+      "git_blob_sha": "f3daac7f0fd9b198b2525cb57603fcc13474f1a8",
+      "sha256": "0d94bea5dfdaa4a185575e95ec3f0032d2cfdd44a86b949a160c007b51e3acf3",
+      "bytes": 836
+    },
+    {
+      "path": "panthera_python/robot_param/motor_param/motor_6.yaml",
+      "git_blob_sha": "ca2878ce4ad2b975bcdbb2feaccebfdc70b63800",
+      "sha256": "5f60d94f33c100cff72a5c013494cd1235ebe3bd5443691d6043962017191d91",
+      "bytes": 2441
+    },
+    {
+      "path": "panthera_python/robot_param/motor_param/robot_config.yaml",
+      "git_blob_sha": "5a4d5a0b85f404b07ae12ec5ed2f08da8b84f00c",
+      "sha256": "6f49e29e1dfcfa212bca319d07e35c791aacd56871ecfd0f6e3b7c5baf875ade",
+      "bytes": 52
+    },
+    {
+      "path": "panthera_python/Panthera-HT_description_V1.1.0/meshes/stl/base_link.STL",
+      "git_blob_sha": "ed24f641c3a1562e95b6e95655bef67af50b3082",
+      "sha256": "f5b5421f436c25790c4d0118ba5af89c98dbbad36830290011c3b1341b03a691",
+      "bytes": 3555184
+    },
+    {
+      "path": "panthera_python/Panthera-HT_description_V1.1.0/meshes/stl/gripper_L_link.STL",
+      "git_blob_sha": "55977459436ab7f6b5ba7eb8b74cb611cc83feb4",
+      "sha256": "b66eaa44f735f2fb35ac218253cadf0d10e15a2d922f27e535ac101a9aceeb20",
+      "bytes": 1055984
+    },
+    {
+      "path": "panthera_python/Panthera-HT_description_V1.1.0/meshes/stl/gripper_R_link.STL",
+      "git_blob_sha": "10497317ea56cc81887d24f4e01a5cf586234737",
+      "sha256": "540f108c1fff9c10e1f73efb54d246a03737800ffad3dfb1bc818d24328ea826",
+      "bytes": 1058884
+    },
+    {
+      "path": "panthera_python/Panthera-HT_description_V1.1.0/meshes/stl/gripper_center_link.STL",
+      "git_blob_sha": "0cf94a4039d1219f0c35a508fc53fd1bf530d5d3",
+      "sha256": "cedb7cfd5c7fb811d0b9bb96c145a43f719578d59d5ef78df4300e2e127c9301",
+      "bytes": 1774384
+    },
+    {
+      "path": "panthera_python/Panthera-HT_description_V1.1.0/meshes/stl/link1.STL",
+      "git_blob_sha": "95fcee438fadbc5ae28abeac0f86d4924d501306",
+      "sha256": "9251e028741ca71c842a766cc19314f48e92b5e5abe3039742f620ea92c8605c",
+      "bytes": 988884
+    },
+    {
+      "path": "panthera_python/Panthera-HT_description_V1.1.0/meshes/stl/link2.STL",
+      "git_blob_sha": "1edaf6d8ae4d090dc40d81a1c9f3841e765593a6",
+      "sha256": "3efa06220d85bffb1bfdafdc1ecce888dfdbfd2c0dcbcfe676a64d256e8642d1",
+      "bytes": 18514684
+    },
+    {
+      "path": "panthera_python/Panthera-HT_description_V1.1.0/meshes/stl/link3.STL",
+      "git_blob_sha": "fb1aa8dac9d33d86fb8bce3c84f4b36e6bbf898f",
+      "sha256": "6e4d9b1b45a3b337c7d84ae4c9353e483b0349c904b8e4c6f8cb5c983b5c72f0",
+      "bytes": 4842884
+    },
+    {
+      "path": "panthera_python/Panthera-HT_description_V1.1.0/meshes/stl/link4.STL",
+      "git_blob_sha": "ba77c152f6224276dc64e26728f3c4b336a1e8b0",
+      "sha256": "f304c8b48ecc6d4411b1114851b7213bf2377487860be04f454e57b5485fb634",
+      "bytes": 2871184
+    },
+    {
+      "path": "panthera_python/Panthera-HT_description_V1.1.0/meshes/stl/link5.STL",
+      "git_blob_sha": "0ffa069a4b292699ab2b72fbf4ca3334bfd284b6",
+      "sha256": "bd890d39eb7944486d5234563d2396bf4bf67d983925a6867a59adc4e02c98ab",
+      "bytes": 2672284
+    },
+    {
+      "path": "panthera_python/Panthera-HT_description_V1.1.0/meshes/stl/link6.STL",
+      "git_blob_sha": "0881c4d39b5074e6128db17a8ab32238f658d484",
+      "sha256": "aa8716b691534395e5ba8ba4a5d1b587d845db80f34711a14e24574179e815e5",
+      "bytes": 83484
+    },
+    {
+      "path": "panthera_python/Panthera-HT_description_V1.1.0/meshes/visual/base_link.glb",
+      "git_blob_sha": "c6258611979534f90f6aea203a0002a8757f375b",
+      "sha256": "e43173300b17ace41832785b79411e1526f6a93f4de46aa4d9b0e21d1acb03da",
+      "bytes": 1898904
+    },
+    {
+      "path": "panthera_python/Panthera-HT_description_V1.1.0/meshes/visual/gripper_L_link.glb",
+      "git_blob_sha": "7c5667b93a568d43d54fdc0d060baaca50549424",
+      "sha256": "c5e40a631d9fe1e3c2b18a9cf166d70f90f6fe4c1e4a0bcf6851a4476a5dec07",
+      "bytes": 533104
+    },
+    {
+      "path": "panthera_python/Panthera-HT_description_V1.1.0/meshes/visual/gripper_R_link.glb",
+      "git_blob_sha": "e704b34b7d1057989008d6b4d969c7460fc77aa5",
+      "sha256": "381593fc3cfc18e55ac8388f68a0fc6804b7c1d88e6dbeaaad34d572a08644de",
+      "bytes": 532736
+    },
+    {
+      "path": "panthera_python/Panthera-HT_description_V1.1.0/meshes/visual/gripper_center_link.glb",
+      "git_blob_sha": "a82c53afd2fcb7fea3518f020c8c5cce7f6b340a",
+      "sha256": "070bbd04295dcede252007b6018dd1795275fae63d69422dfc2e5d17eed14b9f",
+      "bytes": 1037500
+    },
+    {
+      "path": "panthera_python/Panthera-HT_description_V1.1.0/meshes/visual/link1.glb",
+      "git_blob_sha": "e67c9914e2e417813e9e91123a303db90e4eda9c",
+      "sha256": "5dff6a1305e1094bb7903412372a9e601920b5fbbc54e314fd25f4ae709ca6ce",
+      "bytes": 511672
+    },
+    {
+      "path": "panthera_python/Panthera-HT_description_V1.1.0/meshes/visual/link2.glb",
+      "git_blob_sha": "0f80de5fc85f81347f279c3f3d68e8c6c41b80e5",
+      "sha256": "404c6a9ca568b172d6e5bc220a9f1350341abf765ccf343c6b4678ed13a39ccd",
+      "bytes": 11608924
+    },
+    {
+      "path": "panthera_python/Panthera-HT_description_V1.1.0/meshes/visual/link3.glb",
+      "git_blob_sha": "07ed3fe08d850686750db8fcd27b14c0e24c78e4",
+      "sha256": "19c1201e6d52a1ee7eca7e235298f0d987543bcfb041c560dcbc979f981cf86b",
+      "bytes": 3106292
+    },
+    {
+      "path": "panthera_python/Panthera-HT_description_V1.1.0/meshes/visual/link4.glb",
+      "git_blob_sha": "63630567c04921052ae987e0714b6328021f403f",
+      "sha256": "49432e7561a56680e78200b2d548e9d2f9dfeecdba9979cda90e55bedfd2b3ca",
+      "bytes": 1595820
+    },
+    {
+      "path": "panthera_python/Panthera-HT_description_V1.1.0/meshes/visual/link5.glb",
+      "git_blob_sha": "b6ee59da824744a76101cc1ed37f34abb9d82269",
+      "sha256": "54262ddb935633650adbcee5243aac0b13cbb2ef51d0215b5abaf66c9a44eb40",
+      "bytes": 1486300
+    },
+    {
+      "path": "panthera_python/Panthera-HT_description_V1.1.0/meshes/visual/link6.glb",
+      "git_blob_sha": "f61b4d962360e84906ae6be2511822413a09dddc",
+      "sha256": "c6d19e0f8b6281561b86c2d445c9090dd914195eb867677528e4afb3e293feb9",
+      "bytes": 48260
+    }
+  ],
+  "payload": {
+    "hand_mass_kg": null,
+    "hand_center_of_mass_m": null,
+    "adapter_mass_kg": null,
+    "mounting_transform": null
+  },
+  "gravity_enabled": false,
+  "hardware_model_verified": false,
+  "note": "URDF limit metadata is preserved as source data and is not an added controller limiter.",
+  "local_asset_urdf": "PantheraHT.urdf",
+  "local_asset_sha256": "baaedfe0012987fbc547f36cc0b6177fde1840c57a7b70c4c9edaa76aaf49a6f",
+  "local_asset_changes": [
+    "six arm joints only; original gripper removed",
+    "mesh URIs rewritten to meshes/visual and meshes/stl relative paths"
+  ]
+}

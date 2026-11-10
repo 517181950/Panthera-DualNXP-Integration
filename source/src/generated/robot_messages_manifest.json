@@ -1,0 +1,28 @@
+{
+  "format": "wirelink-codegen-manifest-v1",
+  "compiler": {
+    "name": "wlc",
+    "version": "0.8.0",
+    "codegen_abi": 32
+  },
+  "module": "robot_messages",
+  "identity": {
+    "algorithm": "fnv1a64-v1",
+    "schema": "0xcbc84daa7c64c216",
+    "binding_profile": "0xd43c9427f1dc7724"
+  },
+  "bounded_fields": [
+  ],
+  "artifact_digest_algorithm": "fnv1a64-domain-bytes-v1",
+  "artifacts": [
+    {"path": "robot_messages.c", "size": 180015, "digest": "0x826bcef5cfa96f19"},
+    {"path": "robot_messages.h", "size": 20042, "digest": "0x04a27aae03e7fd26"},
+    {"path": "robot_messages_advanced.h", "size": 273, "digest": "0xb803487862ad28b4"},
+    {"path": "robot_messages_bindings.c", "size": 30807, "digest": "0x08aca2c3e541adb9"},
+    {"path": "robot_messages_bindings.h", "size": 8960, "digest": "0xa8c81d53a04d65e9"},
+    {"path": "robot_messages_endpoint.h", "size": 425, "digest": "0x36033940038675eb"},
+    {"path": "robot_messages_runtime.c", "size": 23150, "digest": "0x802662933900410a"},
+    {"path": "robot_messages_runtime.h", "size": 26670, "digest": "0x015bbc62a3c9b340"},
+    {"path": "robot_messages_values.h", "size": 19436, "digest": "0x6417d11b0fa1855c"}
+  ]
+}

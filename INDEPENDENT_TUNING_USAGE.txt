@@ -1,0 +1,61 @@
+双臂双手独立调参（主机入口 run-one-gello-two-arms.py）
+
+主配置：one-gello-two-arms.json
+boards.left  = node11，新臂＋新手。
+boards.right = node12，原臂＋原手。
+以下参数仅在程序启动时读取。保留原有USB和NXP-UART主手输入路径。
+默认数值未改变；增加的是分别配置的能力，没有进行硬件操作。
+
+机械臂：
+每侧原有kp、kd为本侧六轴MIT跟随增益，顺序J1..J6。
+identified是本侧重力参数文件。回零增益仍由原有homing_gains逻辑决定。
+共用soft-limits.json提供默认软限位，boards.<side>.soft_limits覆盖本侧字段。
+空对象{}表示全部继承。覆盖优先于公共文件，数组整体替换，必须有六个数。
+例如仅让新臂慢一点：
+boards.left.soft_limits = {
+  "velocity_deg_s": [10,10,10,10,10,10],
+  "acceleration_deg_s2": [20,20,20,20,20,20]
+}
+boards.right.soft_limits保持{}，则仍使用公共文件中的15度/秒、30度/秒²。
+这段是修改示例，尚未应用。所有软限位字段含义和校验见SOFT_LIMIT_USAGE.txt。
+独立调参不改变逻辑坐标、编码器整圈零偏，也不修改NXP独立回零。
+
+手：每侧boards.<side>.hand_control
+profile：five_finger（默认）或two_finger，采用原有分段抓握曲线。
+current_ma：默认500；模式3控制帧中整只手共用的电流参数。
+  当前固件只使用hand_soft_current_ma[0]发送这个字段，不能逐指独立电流。
+  电流参数不等于标定过的抓握力；代码的16位校验只是协议表示范围，不是额定值。
+grasp_inverted：默认false；true时先把抓握百分比p变成100-p。
+grasp_scale：默认1；对抓握百分比乘比例，必须>0。
+grasp_offset_percent：默认0；加百分比偏移，最后截到0..100再进入抓握曲线。
+joint_scale：默认[1,1,1,1,1,1]；对抓握曲线输出的六个角度分别乘比例。
+joint_offset_deg：默认[0,0,0,0,0,0]；最后对六个角度分别加偏移（度）。
+  顺序：拇指旋转、拇指弯曲、食指弯曲、中指弯曲、无名指弯曲、小指弯曲。
+  映射后的角度只检查协议可表示性；必须依据实际手的机械范围设置。
+max_target_speed_deg_s：默认null，保留原有直接发送行为；设置六个正数后，
+  在主机50Hz发送路径中，分别限制六个目标角度的变化率（度/秒）。
+  初次发送以实测角度为起点，最多前进一个20ms周期的角度变化量。
+  这是目标变化率限制，不是手内电机速度闭环，也不是手指NCBF安全证明。
+feedback_timeout_ms：默认100；手角度反馈的板端年龄加主机收包后的时间。
+  仅调整本侧手的反馈故障门槛，不改变50Hz查询和发送频率。
+
+手的处理顺序：
+共同扳机百分比 -> 本侧反向/比例/偏移 -> 本侧抓握曲线 -> 六通道比例/偏移
+-> 可选目标变化率限制 -> 本侧NXP/P1L。
+主手失联时，实测角度保持目标直接进入变化率限制，不再次应用抓握比例和偏移。
+示例：只将左手joint_scale第3项设为0.8，可减小左手食指抓握角度，右手保持原样。
+示例：左手current_ma=300、右手current_ma=500，会下发不同的整手电流参数。
+这些示例未自动应用，也不代表已确认适合实机。
+
+模式3发送帧不使用duration_ms作为运动时间；不能通过修改send_hand(...,20)
+中的20实现手速度调节。使用max_target_speed_deg_s调整主机目标变化率。
+手模式仍固定为3，不提供未经此入口验证的模式切换配置。
+
+检查实际生效参数（只读，无硬件连接）：
+/home/aster/miniforge3/envs/panthera/bin/python run-one-gello-two-arms.py
+输出effective_tuning分别显示left/right合并后的软限位和手参数。
+实际运行目录同时保存effective-tuning.json；hands.csv记录变化率限制后的发送目标。
+
+两侧仍共享GELLO输入和控制循环，现有故障联停保持不变；独立调参不等于独立故障运行。
+离线专项：python -m unittest discover -s source/host/examples -p test_teleop_tuning.py -v
+完整离线检查：bash check-offline.sh

@@ -1,0 +1,34 @@
+2026-10-30 validation
+
+Interpreter: C:\Users\KelvinLM\miniconda3\envs\L1-Hand-PantheraHT\python.exe
+Dependencies observed: NumPy 2.5.4, Pinocchio 4.1.0.
+
+Final run:
+  run_example.cmd test_arm_examples.py: 9 tests, OK (40.763 seconds under host load).
+  run_example.cmd test_udp_experiment.py: 1 test, OK (13.407 seconds under host load).
+  Detailed logs: tests.log, test_udp.log (local ignored files).
+
+Coverage: gravity versus Pinocchio with coordinate mapping and payload;
+synthetic gravity identification and held-out poses; model identity/roundtrip;
+trajectory velocity derivatives; nonnegative friction and full paired-pass
+synthetic identification; all six experiment lifecycles; interrupted send
+cleanup; resume/changed-condition rejection; real loopback UDP codec/RPC,
+feedback and MIT vectors with a simulated board.
+
+Generated historical plan: logs/legacy285_preview.json, 285 poses.
+Gravity-only computation benchmark: approximately 14.7 microseconds/call,
+10,000 calls on this host before heavy load. This is NOT closed-loop performance.
+
+Physical preflight: host Ethernet 192.168.10.1/24; no board packets during
+5-second read-only monitor. Ping from 192.168.10.1 to 192.168.10.11 failed;
+Ethernet neighbor resolution incomplete. No new physical motion tests or
+new physical calibration results. Current URDF excludes hand/adapter mass;
+encoder-to-model mapping remains to be verified on the actual assembly.
+
+Historical reference package SHA256:
+9F614CD86B301F5C4E452E4CCB01DC624104CB0F61DD39D6BDBA8B50BCF8AF7F
+Adapted experiment concepts from tools.zip; Linux serial SDK, fcntl locks,
+old dual-arm role assumptions, old v4 parameters and old brake semantics
+were not transplanted into the UDP SDK.
+
+Implementation details and commands: README.md.

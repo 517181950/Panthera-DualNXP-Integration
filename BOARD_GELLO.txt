@@ -1,0 +1,71 @@
+板载 GELLO 最新状态：改用 J11 USB 主机（2026-11-06）
+
+已定位板级共线：芯片文档 MCXNP184M150F70 第101/103页列出 P1_11 的 CAN0_RXD/I3C1_PUR 和 P1_16 的 FC5_P0/I3C1_SDA；UM12018 第16页图12明确 P1_16 经 R53 1kΩ连接 P1_11。关闭 I3C 软件节点不能断开电阻，这解释了先前 UART RX 与 CAN RX 的波形相关性。原先只核对芯片MUX、不核对板级R53的判断不完整。原理图证据：evidence/frdm-i3c-r53.png。
+USB硬件依据：UM12018 第14页，J11为MCXN947 USB1 Host/Device；J17为另一颗MCU-Link调试器。evidence/frdm-usb-host.png。
+
+新接法：原臂侧 NXP J11（MCX USB）→ 微雪 Bus Servo Adapter (A) USB口，微雪跳帽B档；拔掉J5 RX/TX信号线。J17继续接电脑提供调试和板子供电；舵机保留原供电。使用支持数据的USB线/OTG转接。板上默认CC电路负责J11 VBUS，软件不强行驱动DNP电阻后的P4_16。
+微雪官方：https://docs.waveshare.com/Bus_Servo_Adapter_A/Product-Wiring-Example
+
+USB固件已烧录且Flash逐字节回读通过；USB 1a86:55d3枚举、CDC 1Mbps配置与7/7舵机读取均已现场验证。固件：evidence/board-gello-usb-candidate/right.bin 与 right.elf，来源清单 manifest.json。119项Python检查、C协议/回零测试、USB CDC描述符截断/错误端点测试通过。44.0773秒记录实测174.51整组/秒；有效回复53827次、单次超时14次，采样点均7/7，校验错误/跳点/溢出为0。记录中板端最大单轴反馈年龄7.6ms。六轴与扳机均观察到变化，扳机本次未验证完整端点；原固定标定不变。完整报告evidence/board-gello-usb-verified.json。
+构建：bash build-local.sh right 已默认USB；bash build-board-gello-usb.sh 为独立 build-right-usb。已安装镜像保存在evidence/board-gello-usb-candidate。
+只读查询：/home/aster/miniforge3/envs/panthera/bin/python tools/watch-board-gello.py --seconds 10 --output evidence/board-gello-usb-readonly.json
+SWD只读诊断：/home/aster/robotics/Winora_Firmwares/.venv/bin/python tools/inspect-board-gello-usb.py
+USB主机遥操入口：/home/aster/miniforge3/envs/panthera/bin/python run-one-gello-two-arms.py --gello-source nxp-usb --execute
+USB采集已通过，遥操入口仍需原有回零与双手反馈检查；本次未启动双臂跟随。USB仍通过UDP5021给电脑现有控制器，电脑仍需运行；不新增自动遥操动作。
+
+旧J5 UART已从原臂USB固件中禁用。用户确认支撑急停后完成检修烧录，原臂当前检修停止；新臂仍为原有HOME_HOLD。C对C线直连可用，最初未检测到VBUS是因为线接在新臂板，移到原臂node12后读通，无须OTG转接。以下为UART方案历史记录，接线/运行步骤已被USB方案替代，不应在当前CAN共线板上继续使用。
+
+---------------- UART历史记录 ----------------
+板载串口 GELLO（2026-11-06）
+
+参考私人仓库：git@github.com:517181950/Winora_Firmwares.git
+核对远端 HEAD：b2f8be5eb844837fe61b80d47a09eef010f2a94c
+J5 引脚参考 firmware/apps/uart_rx/README.md 及 boards/*.overlay。
+只读飞特帧、校验、多圈解卷参考 firmware/lib/fetech/Fetech.cpp。
+旧 FetechThread 的启动姿态零点没有移植；继续使用本工程 gello-single-arm.json 的固定标定。
+
+连接：原臂侧 node12 / FVIZ5SIGKZEBZ / 192.168.10.12。
+J5.3 RX=P1_16，J5.4 TX=P1_17，J5.8 GND。
+用户确认对端为微雪舵机控制板，具体型号/跳帽待确认。若为 Bus Servo Adapter (A)，按厂家定义同名连接：NXP J5.3 RX → 微雪 RX，J5.4 TX → 微雪 TX，GND共地；外接UART必须A档，USB控制为B档。此前通用交叉接线说明已更正。UART为3.3V TTL。
+官方依据：https://docs.waveshare.com/Bus_Servo_Adapter_A/Product-Wiring-Example
+固件要求外部接口负责单线半双工转换，不直接将 NXP 推挽 TX 接舵机 DATA。
+J17 UART4 保留为日志控制台，J5 UART5 为 1000000 bit/s、8N1，二进制专用。
+
+当前链路：GELLO → 原臂侧 NXP UART5 → UDP5021 → 电脑现有双臂控制器 → 两块 NXP。
+电脑仍须运行遥操程序；本功能不是脱离电脑的板端独立遥操。
+每轮依次只读 ID1..7 的位置和速度（寄存器56起4字节），目标采集200轮/秒；实际频率以现场计数测量为准。
+500Hz 臂控制、500Hz 板间状态交换、50Hz 手部命令继续由现有程序负责。
+固件不向 GELLO 写目标、扭矩、ID或零点。每个ID单独记录反馈年龄。
+电脑端收到 UDP 回复时将整个往返耗时计入数据年龄；UART旧值不会因网络正常而变新。
+重复/错误回复、校验失败、错误状态及不匹配ID不可作为有效反馈。
+
+只读诊断（不会发出臂手动作命令）：
+cd /home/aster/Desktop/Panthera-DualNXP-Integration
+/home/aster/miniforge3/envs/panthera/bin/python tools/watch-board-gello.py --seconds 10 --output evidence/board-gello-readonly.json
+
+板载串口单GELLO双臂双手入口（会按现有流程回零并准备臂手后进入跟随）：
+/home/aster/miniforge3/envs/panthera/bin/python run-one-gello-two-arms.py --gello-source nxp-uart --execute
+
+原电脑USB GELLO入口保留为默认：
+/home/aster/miniforge3/envs/panthera/bin/python run-one-gello-two-arms.py --execute
+
+不要同时启动两个遥操程序。串口入口启动前要求七个节点均有新鲜数据，双手反馈也仍由原流程检查。
+双手目前的实际通信状态需单独验证，不能把串口通过等同于双手已恢复。
+
+构建：bash build-local.sh right
+左侧不需要启用UART5；两侧PHD1板间协议长度未变。
+候选固件与来源：evidence/board-gello-candidate/manifest.json。
+部署状态以 evidence/board-gello-installed.json（如存在）和最新实测日志为准。
+离线验证：bash check-offline.sh；本轮日志 evidence/board-gello-offline.log。
+
+现场进度：已烧录且逐字节回读一致；NXP网络诊断正常，GELLO仍为0/7节点，不能启动串口遥操。
+暂停发送后RX仍有连续字节，常见波特率均有串口帧错误，未识别出合法反馈。等待用户交换RX/TX后复测。
+当前UART处于被动接收、无TX状态；两臂未进入遥操。请勿为恢复UART而重启NXP（正常重启会触发既有回零）。
+完成接线后仅恢复只读查询：
+/home/aster/robotics/Winora_Firmwares/.venv/bin/python tools/set-gello-uart-passive.py resume
+再次暂停只读查询：
+/home/aster/robotics/Winora_Firmwares/.venv/bin/python tools/set-gello-uart-passive.py pause
+工具先校验当前Flash与候选bin完全相同，再按匹配ELF寻址，仅改UART诊断标志，不复位CPU、不发送臂手命令。
+
+收发暂停工具已补充关闭UART5接收器/RX中断，resume恢复；不影响臂手控制。
+抗连续乱码的有界RX中断候选已编译：evidence/board-gello-bounded-rx-candidate/，尚未烧录。该改动限制单次ISR处理量、拒收硬件帧错误期间的数据，不扩大动作权限。

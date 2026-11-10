@@ -1,0 +1,134 @@
+{
+  "urdf_sha256": "be3fcce88887707a40357300934c36eb9bd1cf3045ec3bda985b3091ba8a9a46",
+  "ids": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "zero_ticks": [
+    123.0,
+    1118.0,
+    2524.0,
+    64.0,
+    2080.0,
+    4134.0
+  ],
+  "sign": [
+    -1,
+    1,
+    1,
+    1,
+    -1,
+    1
+  ],
+  "verified": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+  ],
+  "gravity_base": [
+    0.0,
+    0.0,
+    -9.81
+  ],
+  "gravity_verified": true,
+  "source": "用户按URDF Pose A摆放，软件记录；不写硬件零位",
+  "direction_evidence_by_axis": {
+    "4": {
+      "ticks": 174.0,
+      "delta_ticks": 110.0,
+      "requested_urdf_direction": 1
+    },
+    "5": {
+      "ticks": 2150.0,
+      "delta_ticks": 70.0,
+      "requested_urdf_direction": 1
+    }
+  },
+  "legacy_reuse": {
+    "source": "verified legacy teleop + URDF joint axis alignment",
+    "assumption": "corresponding upright bases; shoulder-to-elbow directions aligned",
+    "arm_urdf_sha256": "4794123c04aad589c32c73d13ce29971bb4245c4a5b13ad796cadbd64783ce25",
+    "gello_urdf_sha256": "be3fcce88887707a40357300934c36eb9bd1cf3045ec3bda985b3091ba8a9a46",
+    "base_yaw_deg": -90.00000000000027,
+    "aligned_axis_dot": [
+      1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0
+    ],
+    "arm_to_gello_sign": [
+      1,
+      -1,
+      1,
+      1,
+      1,
+      -1
+    ],
+    "legacy_encoder_to_arm_sign": [
+      -1,
+      -1,
+      1,
+      1,
+      -1,
+      -1
+    ],
+    "derived_encoder_to_gello_sign": [
+      -1,
+      1,
+      1,
+      1,
+      -1,
+      1
+    ],
+    "conflicts": [
+      5
+    ]
+  },
+  "direction_source_by_axis": {
+    "1": "legacy+model inference",
+    "2": "legacy+model inference",
+    "3": "legacy+model inference",
+    "4": "legacy+model inference",
+    "5": "first stable isolated clockwise check agrees with legacy-derived sign",
+    "6": "legacy+model inference"
+  },
+  "j5_conflict_resolution": {
+    "before": [
+      123.0,
+      1119.0,
+      2488.0,
+      211.0,
+      2064.0,
+      4149.0
+    ],
+    "after": [
+      170.0,
+      1119.0,
+      2487.0,
+      217.0,
+      2038.0,
+      4123.0
+    ],
+    "delta_ticks": [
+      47,
+      0,
+      -1,
+      6,
+      -26,
+      -26
+    ],
+    "sign": -1,
+    "user_confirmation": "upright base; J5 clockwise viewed from above",
+    "source": "first stable read after user confirmation; later read moved again, not used",
+    "acceptance": "26 tick stable displacement agrees with independently derived legacy sign"
+  }
+}

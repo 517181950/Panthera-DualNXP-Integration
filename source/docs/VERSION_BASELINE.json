@@ -1,0 +1,35 @@
+{
+  "snapshot_created": "2026-10-30T07:36:50.779906+08:00",
+  "status": "Current diagnostic firmware. Hand feedback absent. NOT a known-good release.",
+  "arm_tx": "All IDs 0x8001..0x8006 blocked in send(); regular arm polling disabled.",
+  "hand": "Compliance mode attempted; no ACK; grasp/release attempted; no RX.",
+  "firmware": {
+    "zephyr.hex": {
+      "sha256": "49f35c38058b582f66976729f74c208a496702d39502037b4528e29f93c304bd",
+      "bytes": 355203
+    },
+    "zephyr.elf": {
+      "sha256": "c89c6034d9791ee389cfa6d6daf3b6fe98a85b741c3c29b7a4316af9ce387048",
+      "bytes": 2617108
+    }
+  },
+  "external_archive": "C:\\Users\\KelvinLM\\Documents\\Codex\\2026-10-29\\ni-k\\outputs\\git-initial-snapshot-20261030",
+  "historic_backups": [
+    {
+      "path": "C:\\Users\\KelvinLM\\Documents\\Codex\\2026-10-29\\ni-k\\work\\pre-state-example",
+      "meaning": "Pre-change filesystem backup, NOT a historic Git commit or proof of a flashed binary."
+    },
+    {
+      "path": "C:\\Users\\KelvinLM\\Documents\\Codex\\2026-10-29\\ni-k\\work\\pre-host-reorganization",
+      "meaning": "Pre-change filesystem backup, NOT a historic Git commit or proof of a flashed binary."
+    },
+    {
+      "path": "C:\\Users\\KelvinLM\\Documents\\Codex\\2026-10-29\\ni-k\\work\\pre-live-sdk",
+      "meaning": "Pre-change filesystem backup, NOT a historic Git commit or proof of a flashed binary."
+    },
+    {
+      "path": "C:\\Users\\KelvinLM\\Documents\\Codex\\2026-10-29\\ni-k\\work\\pre-fast-mode-switch",
+      "meaning": "Pre-change filesystem backup, NOT a historic Git commit or proof of a flashed binary."
+    }
+  ]
+}

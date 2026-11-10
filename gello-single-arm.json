@@ -1,0 +1,147 @@
+{
+  "serial": {
+    "port": "/dev/ttyACM0",
+    "baud": 1000000,
+    "group_mask": 3,
+    "timeout_ms": 5.0,
+    "scan_interval_ms": 0.0,
+    "max_delta_ticks": 100,
+    "auto_reconnect": true,
+    "link_loss_ms": 500.0,
+    "reconnect_initial_ms": 250.0,
+    "reconnect_max_ms": 2000.0
+  },
+  "swap_arms": true,
+  "left": {
+    "axes": [
+      {
+        "sign": -1,
+        "scale": 1.0,
+        "offset_rad": 0.0
+      },
+      {
+        "sign": 1,
+        "scale": 1.0,
+        "offset_rad": 0.0
+      },
+      {
+        "sign": -1,
+        "scale": 1.0,
+        "offset_rad": 0.0
+      },
+      {
+        "sign": 1,
+        "scale": 1.0,
+        "offset_rad": 0.0
+      },
+      {
+        "sign": -1,
+        "scale": 1.0,
+        "offset_rad": 0.0
+      },
+      {
+        "sign": 1,
+        "scale": 1.0,
+        "offset_rad": 0.0
+      }
+    ],
+    "gripper": {
+      "min_raw": -977,
+      "max_raw": 110,
+      "inverted": true,
+      "output_min": 0.0,
+      "output_max": 0.04
+    },
+    "zero_raw_ticks": [
+      1937,
+      933,
+      210,
+      1847,
+      1385,
+      2574
+    ]
+  },
+  "right": {
+    "axes": [
+      {
+        "sign": 1,
+        "scale": 1.0,
+        "offset_rad": 0.0
+      },
+      {
+        "sign": -1,
+        "scale": 1.0,
+        "offset_rad": 0.0
+      },
+      {
+        "sign": -1,
+        "scale": 1.0,
+        "offset_rad": 0.0
+      },
+      {
+        "sign": -1,
+        "scale": 1.0,
+        "offset_rad": 0.0
+      },
+      {
+        "sign": -1,
+        "scale": 1.0,
+        "offset_rad": 0.0
+      },
+      {
+        "sign": 1,
+        "scale": 1.0,
+        "offset_rad": 0.0
+      }
+    ],
+    "gripper": {
+      "min_raw": 1326,
+      "max_raw": 2000,
+      "inverted": false,
+      "output_min": 0.0,
+      "output_max": 0.04
+    }
+  },
+  "_single_arm_calibration": {
+    "gello_serial": "5AB0182526",
+    "group": 0,
+    "arm": "FVIZ5SIGKZEBZ",
+    "change": "J2 left sign -1 to +1; original profile preserved",
+    "evidence": "single-arm live log negative J2 targets vs zero position; positive10 probe confirms movement",
+    "remaining": "Full range, zero pose calibration, tracking accuracy pending",
+    "gripper": {
+      "id": 7,
+      "open_unwrapped": -977,
+      "closed_unwrapped": 110,
+      "open_raw": 3119,
+      "closed_raw": 110,
+      "source": "Continuous capture of user-operated trigger stroke; open rest110, closed observed extreme-977; supports4095/0 rollover",
+      "validated": true,
+      "evidence": "evidence/gello-trigger-node-identification.json",
+      "live_follow_acceptance": "Direction corrected offline; awaiting live check",
+      "direction_source": "User reports hand direction reversed; inverted changed false to true"
+    },
+    "arm_zero": {
+      "captured_at": "2026-11-06T11:25:27.506673",
+      "user_confirmed_reference_pose": true,
+      "zero_raw_ticks": [
+        1937,
+        933,
+        210,
+        1847,
+        1385,
+        2574
+      ],
+      "span_ticks": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "serial": "5AB0182526",
+      "group": 0
+    }
+  }
+}

@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="v3小舵机总装.SLDASM">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="-0.00712736845741218 0.00951291387691526 0.0273669140634714"
+        rpy="0 0 0" />
+      <mass
+        value="0.390738539474951" />
+      <inertia
+        ixx="0.000212025008995793"
+        ixy="-2.54377282184674E-06"
+        ixz="2.52677406237535E-05"
+        iyy="0.000175537726387757"
+        iyz="4.29491079595069E-06"
+        izz="0.000162983172311935" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://v3小舵机总装.SLDASM/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://v3小舵机总装.SLDASM/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="link1">
+    <inertial>
+      <origin
+        xyz="-0.000380162326057352 -0.00228377061799692 -0.00895180359199293"
+        rpy="0 0 0" />
+      <mass
+        value="0.0138501492300898" />
+      <inertia
+        ixx="3.11643792845066E-06"
+        ixy="2.33724249106405E-08"
+        ixz="-7.67896959357502E-08"
+        iyy="2.91523606648672E-06"
+        iyz="4.51563100367011E-07"
+        izz="1.63916336599506E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://v3小舵机总装.SLDASM/meshes/link1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://v3小舵机总装.SLDASM/meshes/link1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint1"
+    type="revolute">
+    <origin
+      xyz="0.00031628379922177 0.031592140055627 0.102"
+      rpy="3.14159265358979 0 -1.5707963267949" />
+    <parent
+      link="base_link" />
+    <child
+      link="link1" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-1.5707963"
+      upper="1.5707963"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="link2">
+    <inertial>
+      <origin
+        xyz="-0.102950393090853 -0.00311674706344278 0.0142250826061158"
+        rpy="0 0 0" />
+      <mass
+        value="0.0365103230756409" />
+      <inertia
+        ixx="3.41606853259758E-06"
+        ixy="-1.00210004756619E-06"
+        ixz="2.284162708176E-08"
+        iyy="9.90738723014981E-05"
+        iyz="-2.00430090887456E-09"
+        izz="9.87671263833572E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://v3小舵机总装.SLDASM/meshes/link2.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://v3小舵机总装.SLDASM/meshes/link2.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint2"
+    type="revolute">
+    <origin
+      xyz="0 0.0144999999999999 -0.0295999978016171"
+      rpy="1.57079632679489 0 0" />
+    <parent
+      link="link1" />
+    <child
+      link="link2" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-3.1415927"
+      upper="0.0000000"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="link3">
+    <inertial>
+      <origin
+        xyz="0.0975256079454513 -0.0144386997671428 0.0141205699213393"
+        rpy="0 0 0" />
+      <mass
+        value="0.0299681308096715" />
+      <inertia
+        ixx="4.03327623599812E-06"
+        ixy="1.55485869417072E-06"
+        ixz="-1.77511540351402E-07"
+        iyy="6.79031236318858E-05"
+        iyz="5.19990811019825E-09"
+        izz="6.80031287485877E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://v3小舵机总装.SLDASM/meshes/link3.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://v3小舵机总装.SLDASM/meshes/link3.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint3"
+    type="revolute">
+    <origin
+      xyz="-0.174586856286298 -0.0195868584873983 0"
+      rpy="0 0 0" />
+    <parent
+      link="link2" />
+    <child
+      link="link3" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="0.0000000"
+      upper="3.1415927"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="link4">
+    <inertial>
+      <origin
+        xyz="0.0270842286432941 -0.0142299996238269 0.0144952646849802"
+        rpy="0 0 0" />
+      <mass
+        value="0.0251063560765162" />
+      <inertia
+        ixx="6.06140025444989E-06"
+        ixy="1.07723402881186E-06"
+        ixz="2.02760932406568E-10"
+        iyy="4.69370821854553E-06"
+        iyz="5.37595513820964E-12"
+        izz="5.28867692056067E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://v3小舵机总装.SLDASM/meshes/link4.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://v3小舵机总装.SLDASM/meshes/link4.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint4"
+    type="revolute">
+    <origin
+      xyz="0.161575294194562 -0.010334525322447 -0.000100000000000364"
+      rpy="0 0 0" />
+    <parent
+      link="link3" />
+    <child
+      link="link4" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-1.5707963"
+      upper="1.5707963"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="link5">
+    <inertial>
+      <origin
+        xyz="-0.0109577676704903 -6.03183451115428E-06 -0.0168946836451272"
+        rpy="0 0 0" />
+      <mass
+        value="0.0181038065684345" />
+      <inertia
+        ixx="3.32099762223203E-06"
+        ixy="-1.11032997189377E-11"
+        ixz="-9.42652203627547E-07"
+        iyy="3.86967157097855E-06"
+        iyz="1.3104101480479E-10"
+        izz="1.87554815430904E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://v3小舵机总装.SLDASM/meshes/link5.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://v3小舵机总装.SLDASM/meshes/link5.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint5"
+    type="revolute">
+    <origin
+      xyz="0.0494153424000001 -0.00810000000656109 0.0145000000065805"
+      rpy="1.5707963267949 0 0" />
+    <parent
+      link="link4" />
+    <child
+      link="link5" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-1.5707963"
+      upper="1.5707963"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="link6">
+    <inertial>
+      <origin
+        xyz="-0.0553216612876753 -0.000292970433754303 -0.018883727619879"
+        rpy="0 0 0" />
+      <mass
+        value="0.107294071222194" />
+      <inertia
+        ixx="3.69925778925413E-05"
+        ixy="-3.00793358386899E-08"
+        ixz="1.82754027687487E-05"
+        iyy="8.24474483314267E-05"
+        iyz="-1.47540480331092E-07"
+        izz="5.14085141220612E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://v3小舵机总装.SLDASM/meshes/link6.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://v3小舵机总装.SLDASM/meshes/link6.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint6"
+    type="revolute">
+    <origin
+      xyz="0.010260002198383 0 -0.0156546146480599"
+      rpy="3.14159265358979 -1.5707963267949 3.14159265358979" />
+    <parent
+      link="link5" />
+    <child
+      link="link6" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.5707963"
+      upper="1.5707963"
+      effort="0"
+      velocity="0" />
+  </joint>
+</robot>

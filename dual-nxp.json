@@ -1,0 +1,54 @@
+{
+  "architecture": "one local arm + P1L hand per NXP; PC owns GELLO mapping, homing and gravity",
+  "peer_port": 5020,
+  "peer_hz": 500,
+  "arm_hz": 500,
+  "hand_hz": 50,
+  "local": "192.168.10.1",
+  "kp": [
+    24.48,
+    61.2,
+    61.2,
+    12.24,
+    12.24,
+    12.24
+  ],
+  "kd": [
+    1.2,
+    1.92,
+    1.92,
+    0.48,
+    0.48,
+    0.48
+  ],
+  "boards": {
+    "left": {
+      "node": 11,
+      "ip": "192.168.10.11",
+      "ports": [
+        5005,
+        5006
+      ],
+      "probe": "KWP5LJ1OK2D5A",
+      "actuators_connected": true,
+      "gello_config": null,
+      "gello_port": null,
+      "group": null,
+      "hand_connected": true
+    },
+    "right": {
+      "node": 12,
+      "ip": "192.168.10.12",
+      "ports": [
+        5015,
+        5016
+      ],
+      "probe": "FVIZ5SIGKZEBZ",
+      "actuators_connected": true,
+      "gello_config": "gello-single-arm.json",
+      "group": 0,
+      "gello_port": "/dev/serial/by-id/usb-1a86_USB_Single_Serial_5AB0182526-if00"
+    }
+  },
+  "one_gello_bimanual_launcher": "run-one-gello-two-arms.py"
+}

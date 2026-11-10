@@ -1,0 +1,96 @@
+{
+  "format": "panthera-friction-transfer-v1",
+  "target_model_identity": {
+    "urdf_sha256": "4794123c04aad589c32c73d13ce29971bb4245c4a5b13ad796cadbd64783ce25",
+    "sign": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "offset_rad": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "payload_mass": 0,
+    "payload_com": [
+      0,
+      0,
+      0
+    ],
+    "gravity": [
+      0,
+      0,
+      -9.81
+    ]
+  },
+  "target_gravity_theta": [
+    0.31947644,
+    0.001182788039518805,
+    -0.00016916277497999556,
+    0.008149987748797997,
+    1.5464401399999996,
+    -0.1786629041051187,
+    -0.0038171400551676024,
+    -0.03123072554767589,
+    0.575534868389187,
+    0.13394062650090016,
+    -0.0009429239306720021,
+    0.041777766643623836,
+    0.3349622170880013,
+    0.010371262507530774,
+    -0.00026662200000000184,
+    0.017885301100808777,
+    0.2843885454498997,
+    -0.0004452373326444923,
+    -0.004360071477746528,
+    -0.00507984436469569,
+    0.3936301449807948,
+    0.0858624506889144,
+    0.00687178284865726,
+    -0.001434832662160326
+  ],
+  "source": {
+    "document": "C:\\Users\\KelvinLM\\Downloads\\Panthera-HT_双臂搭建与标定全流程_2026-10-29.md",
+    "sha256": "43820750cb236b8d611b7cb8bbdd518662fccba46dbc3c6e44e9d77d7786a5d9",
+    "section": "15.1",
+    "arm": "Follower / if00",
+    "gravity_model": "Historical v4 with previous end effector",
+    "raw_csv_available": false,
+    "coefficient_precision": "Six decimals transcribed from user-provided report",
+    "caveat": "J2/J3 had large fit residuals; coefficients are transferred at user request, not reidentified for the current hand."
+  },
+  "requested_runtime_scale": 0.6,
+  "joints": [
+    {
+      "fc_nm": 0.184829,
+      "b_nm_s_rad": 0.012507
+    },
+    {
+      "fc_nm": 0.519368,
+      "b_nm_s_rad": 0
+    },
+    {
+      "fc_nm": 0.301307,
+      "b_nm_s_rad": 0
+    },
+    {
+      "fc_nm": 0.172222,
+      "b_nm_s_rad": 0.010149
+    },
+    {
+      "fc_nm": 0.083397,
+      "b_nm_s_rad": 0
+    },
+    {
+      "fc_nm": 0.10103,
+      "b_nm_s_rad": 0
+    }
+  ]
+}

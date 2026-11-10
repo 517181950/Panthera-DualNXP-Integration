@@ -1,0 +1,22 @@
+/* Ported from Winora_Firmwares firmware/apps/uart_rx, commit b2f8be5.
+ * Keep UART4/J17 as console; J5 is binary GELLO only. */
+/ { aliases { gello-uart = &flexcomm5_lpuart5; }; };
+&i3c1 { status = "disabled"; };
+&pinctrl {
+    gello_j5_pins: gello_j5_pins {
+        group0 {
+            pinmux = <FC5_P0_PIO1_16>, <FC5_P1_PIO1_17>;
+            slew-rate = "fast";
+            drive-strength = "low";
+            input-enable;
+            bias-pull-up;
+        };
+    };
+};
+&flexcomm5 { status = "okay"; };
+&flexcomm5_lpuart5 {
+    status = "okay";
+    current-speed = <1000000>;
+    pinctrl-0 = <&gello_j5_pins>;
+    pinctrl-names = "default";
+};

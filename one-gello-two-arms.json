@@ -1,0 +1,179 @@
+{
+  "local": "192.168.10.1",
+  "require_hands": false,
+  "hz": 500,
+  "soft_limits_file": "soft-limits.json",
+  "gello": {
+    "port": "/dev/serial/by-id/usb-1a86_USB_Single_Serial_5AB0182526-if00",
+    "group": 0,
+    "config": "gello-single-arm.json"
+  },
+  "boards": {
+    "left": {
+      "node": 11,
+      "ip": "192.168.10.11",
+      "ports": [
+        5005,
+        5006
+      ],
+      "kp": [
+        4,
+        10,
+        10,
+        2,
+        2,
+        1
+      ],
+      "kd": [
+        0.5,
+        0.8,
+        0.8,
+        0.2,
+        0.2,
+        0.1
+      ],
+      "hand": true,
+      "identified": "source/host/examples/profiles/gravity_selected.json",
+      "homing_gains": "original_calibrated",
+      "role": "new_arm",
+      "encoder_modulo_joints": [
+        2
+      ],
+      "soft_limits": {
+        "lower_deg": [
+          -20,
+          0,
+          0,
+          -90,
+          -100,
+          -160
+        ],
+        "upper_deg": [
+          20,
+          180,
+          240.64227395494575,
+          90,
+          100,
+          160
+        ]
+      },
+      "hand_control": {
+        "profile": "five_finger",
+        "current_ma": 500,
+        "grasp_scale": 1.0,
+        "grasp_offset_percent": 0.0,
+        "grasp_inverted": false,
+        "joint_scale": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "joint_offset_deg": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max_target_speed_deg_s": null,
+        "feedback_timeout_ms": 100.0
+      }
+    },
+    "right": {
+      "node": 12,
+      "ip": "192.168.10.12",
+      "ports": [
+        5015,
+        5016
+      ],
+      "kp": [
+        24.48,
+        61.2,
+        61.2,
+        12.24,
+        12.24,
+        12.24
+      ],
+      "kd": [
+        1.2,
+        1.92,
+        1.92,
+        0.48,
+        0.48,
+        0.48
+      ],
+      "hand": true,
+      "identified": "source/host/examples/profiles/gravity_selected.json",
+      "homing_gains": "original_calibrated",
+      "role": "original_arm",
+      "encoder_modulo_joints": [
+        2
+      ],
+      "soft_limits": {
+        "lower_deg": [
+          -20,
+          0,
+          0,
+          -90,
+          -100,
+          -160
+        ],
+        "upper_deg": [
+          20,
+          180,
+          240.64227395494575,
+          90,
+          100,
+          160
+        ]
+      },
+      "hand_control": {
+        "profile": "five_finger",
+        "current_ma": 500,
+        "grasp_scale": 1.0,
+        "grasp_offset_percent": 0.0,
+        "grasp_inverted": false,
+        "joint_scale": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "joint_offset_deg": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max_target_speed_deg_s": null,
+        "feedback_timeout_ms": 100.0
+      }
+    }
+  },
+  "hardware_confirmation": {
+    "new_arm_has_same_hand": true,
+    "both_arms_clear_for_homing": true,
+    "one_master_joint_targets": "same encoder coordinates, not Cartesian mirroring",
+    "new_arm_homing_override": {
+      "approved_at": "2026-11-06T12:16:13.250045",
+      "instruction": "仅回零用回零增益，跟随仍低阻抗",
+      "homing_kp": [
+        24.48,
+        61.2,
+        61.2,
+        36.72,
+        12.24,
+        12.24
+      ]
+    }
+  },
+  "encoder_reference_note": "J2 raw zero uses the nearest equivalent whole-turn branch, frozen per start. Observed -361deg startup is -1deg relative to raw -360deg zero. No joint direction reversal."
+}

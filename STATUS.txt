@@ -1,0 +1,56 @@
+2026-11-06 已取消起始角度范围拦截，双NXP烧录回读通过。
+
+起点：只要求六轴反馈有效、新鲜、有限且无电机故障，不因姿态超出模型范围拒绝请求。
+规划：从实测姿态开始，为每轴选择最近的等效竖直角，并固定该整圈偏移贯穿抬直、对正J1、下降；终点是同一圈的等效零位。
+例：J2=-164.18度 → -270度竖直 → -360度等效零位；不会再正转约254度去+90度。
+电脑端同步选取路径，回零结束后更新软件整圈偏移，后续GELLO零目标仍对应实际已回到的零位，不写电机编码器零点。
+回零上限30度/秒，加速度30度/秒²；任一SW2双臂触发、正常板子上电回零保留。
+仍保留反馈/电机故障、5度明显不跟随、控制超时及双板故障停机。接受任意有效起点不等于能穿过机械限位或障碍，也不保证任意姿态存在无碰撞路径。
+
+验证：负角/多圈/超旧模型范围的C状态机完整回零仿真通过；C/Python153306点轨迹对比及其他离线检查、双板编译通过。匹配镜像与ELF的一次性检修烧录，两板均mode0、MIT运动帧0，未带动力验证新路径。
+当前安装证据：evidence/home-any-start-installed.json；候选与路径示例：evidence/home-any-start-candidate/manifest.json；回退：evidence/before-home-any-start。
+用户已确认两臂支撑与急停。本次烧录检修锁跳过自动动作；SW2会重新请求双臂回零，正常NXP复位/上电仍自动回零。
+
+2026-11-06 板载GELLO串口接入进度：
+原臂侧node12已部署J5 UART5 1Mbps只读采集与UDP5021诊断，来自私人仓库Winora_Firmwares的引脚/协议参考；电脑单GELLO双臂入口新增 --gello-source nxp-uart，固定标定与现有增益保持。编译和离线检查通过，Flash回读一致。
+现场尚未读通：0/7节点，RX持续乱码且硬件帧错误；常见波特率被动探测未识别合法帧。当前UART发送已暂停，等待用户交换RX/TX再读。两臂已停止，未启动遥操。
+安装记录：evidence/board-gello-installed.json。说明/命令：BOARD_GELLO.txt。恢复只读UART用 tools/set-gello-uart-passive.py resume，不要用NXP复位替代（正常复位会自动回零）。
+
+板载GELLO接线复测：用户已交换RX/TX，仍0/7有效节点；UART5恢复被动无TX。实读PCR16/17=0x1203、波特率寄存器=0x17000002，与J5 UART5 1Mbps配置一致。临时关闭P1_16输入时0.2秒收到0字节，恢复后约9075字节，确认连续字节由该输入进入；该实验已恢复原引脚配置。等待用户拔下J5 RX/TX两根信号线，GND保持，继续定位。未运行遥操。
+
+后续：用户确认对端为微雪舵机控制板；官方 Bus Servo Adapter (A) 的UART方式要求A档跳帽、RX-RX/TX-TX同名接线，与先前通用交叉建议不同，说明已更正，正在等具体跳帽状态。最新复读仍0/7，UART5收发均已暂停；两臂在用户重启后已自行回零并保持（非停止状态），不可直接烧录中断保持。
+UART连续乱码防护代码已编译到 evidence/board-gello-bounded-rx-candidate，尚未烧录；当前Flash仍与 evidence/board-gello-candidate 匹配。
+
+用户确认微雪跳帽已在A档后再次恢复1Mbps只读查询5秒：仍0/7，采样窗口约4.0003秒内超时增加701次，RX队列溢出增加38342次，合法回复增加0。随后已再次暂停UART5 TX及RX中断，未重启/烧录NXP、未启动遥操。证据：evidence/board-gello-confirmed-a-reread.json。需要核对微雪具体型号及接口实物，A档确认本身未解决问题。
+
+2026-11-06 USB改线根因与候选：已读用户MCXNP184M150F70.pdf，并对照UM12018 p16图12找到R53 1kΩ将P1_16/UART5_RX连接到P1_11/CAN0_RXD，软件禁用I3C不会断开此板级连接。USB改为原臂侧J11 Host -> 微雪B档CH343 CDC ACM，J17保留调试；应拔掉J5 RX/TX。新增独立build-board-gello-usb.sh和nxp-usb遥操入口，候选178280B，119项Python及C检查通过，尚未烧录/枚举实测。候选evidence/board-gello-usb-candidate；两臂最新查询仍HOME_HOLD，等待支撑急停及USB实际接好确认。
+
+USB已现场读通：用户确认支撑急停后烧录原臂侧178280B USB候选，逐字节回读通过，检修启动不回零。C对C线最初接错到新臂板，改接原臂J11后1a86:55d3 CDC正常，7/7节点在线；44.0773秒实测174.51组/秒，53827回复/14单次超时，无校验错误/跳点/溢出；六轴与扳机均有变化。原臂检修停止、新臂仍HOME_HOLD，双手仍无角度回包，本次未启动遥操。原臂默认build-local已改USB；新入口--gello-source nxp-usb。安装清单evidence/board-gello-installed.json，实测evidence/board-gello-usb-verified.json。
+
+2026-11-06 无参数独立Python入口已完成：原臂/新臂/双臂遥操，以及每侧重力补偿、位置保持、手滑条和状态读取，共14个入口。运行参数在运行参数.py，独立入口使用代码参数，旧命令行入口保留JSON方式；固定零点和模型沿用既有标定。14项--help及三种选侧离线预览通过、24项相关回归通过，未启动硬件。命令见直接运行说明.txt。
+
+2026-11-06 遥操启动手部超时修复：两侧手反馈/模式检查移至任何机械臂接管前；模式准备期间保留500Hz电机反馈；无机械臂目标发送的启动失败不发operation17，正常释放租约保留HOME_HOLD。已有目标发送/激活后的退出继续双侧STOP。44项回归通过。现场只读：node11/12均HOME_FAULT error8，六轴反馈新鲜，两手各字段计数0，无有效角度；未清故障、未运动或烧录。证据 evidence/teleop-startup-hand-readonly.json。
+
+2026-11-06 已删除正常退出/烧录待机的SW2重启锁：新增HOME_STOPPED=15，operation17进入普通停止，真实HOME_FAULT不被覆盖；有效静止反馈+新租约+新鲜当前位置目标才能激活。烧录本次启动为STOPPED，普通上电回零保留。两板已烧录/逐字节校验，旧镜像在evidence/before-restartable-stop-flash。check-offline.sh通过；现场两板operation1→17→1→2成功且无目标发送/激活。GELLO七节点127正常。详情evidence/restartable-stop-firmware/manifest.json。
+
+2026-11-06 手未就绪不再阻止臂遥操：运行参数.py及one-gello-two-arms.json设require_hands=False。启动缺反馈/模式未确认的侧通过operation16关闭该手CAN，并保持该臂模型/增益不变；仍校验臂反馈，不盲发手目标，不中途自动接入。active-hands.json与summary记录本次跳过原因。此修改未启动硬件运动，无需烧录。
+
+2026-11-06 碰撞/运行异常处理：已审阅18:36:50、18:37:36、18:38:11三次日志。前两次新臂下降J3误差>5°，用户确认撞桌/外物；第三次跟随触发速度>30deg/s，旧日志未保存触发轴。旧退出operation17卸驱动已改为operation18板端柔顺保持。HOME_SOFT_HOLD=16，重力补偿+阻尼+低刚度，弹性位置差限制3°并让位，不继续旧轨迹；有效反馈下跟踪/回零超时/配对通信异常软停；PC目标50ms超时接管；CAN失效/电机故障仍无法保证支撑。
+两板已安装最终固件并回读校验，旧镜像evidence/before-soft-stop-flash。两臂回零改并发，先完成侧持续保持；软件错误日志保存触发侧/轴/值/快照。主机能力查询19防止新版配旧固件。134项Python及C检查通过，后续清理/并发/新鲜度专项通过。
+用户确认障碍移开、两臂已支撑后逐侧原地测试通过：原臂watchdog观测51.39ms/最大偏移0.64°，新臂53.90ms/1.18°；PC控制关闭后继续保持。首次原臂测试夹具漏开电机查询导致失效，证据保留，修正后重测通过。未故意碰撞，未做运动中停距/全段并发回零验证。当前两臂带电柔顺保持，不能按无力矩状态处理。
+
+2026-11-06 J5超速追溯：19:06:56会话right J5=33.47deg/s触发30deg/s新门限，两侧operation18成功且现场phase16。对照12:44:26旧会话，原臂J5 Kp12.24/Kd0.48完全相同；旧gello_follow 41415条中9911条反馈速度>30，记录峰值304.06deg/s，旧代码无此实测超速退出条件。新增governor/STOP早于18:16无参入口包装，但晚于旧成功演示。用户追问后暂停拟议J5阻尼调参，本轮未修改任何控制参数，不能将新增门限不匹配直接认定为增益改变。见evidence/j5-version-comparison.json。
+
+2026-11-06 按用户要求取消软限位模块的额外实测速度退出检查：移除measured joint overspeed分支；当前运行参数与soft-limits.json删除measured_velocity_deg_s，历史配置该字段仅兼容读取、不参与退出。保留角度边界/目标速度加速度/实测速度预测边界/反馈及跟踪检查，所有增益不变。回放19:06:56 J5=33.47deg/s原故障帧通过，新旧入口有效参数一致。未启动运动、无需烧录。验证evidence/no-measured-speed-exit-tests.log及no-measured-speed-exit-replay.json。
+
+2026-11-06 19:15会话新臂J1跟随误差5.0238度中止，两侧柔顺保持成功；用户确认无阻挡/手扶/线缆牵拉。旧12:44低阻抗跟随J1绝对误差p95=18.4度，统一5度跟随退出与低阻抗工作方式不匹配。仅新臂运行参数/JSON的tracking_error_deg设None，保留原臂5度、所有角度/目标速度加速度/反馈/驱动故障保护，以及独立的回零5度遇阻保护；两侧增益完全不变。原故障帧回放通过；当时整组测试有一项默认配置一致性失败，此临时方案随后由双侧方向性限位取代。另修复DUAL首帧1000Hz显示错误（累计5秒后报告），未运行硬件，无需烧录。证据evidence/low-impedance-tracking-replay.json、low-impedance-tracking-tests.log。
+
+2026-11-06 按用户最新要求将两臂遥操改为方向性软限位：目标截到角度边界，只挡向外运动，向内继续，不因到限位退出。取消遥操实测超速、位置越界和跟随误差退出；调度间隔异常重新建立有界参考，边界制动约束冲突仅对受影响轴重建参考，不锁死程序。目标速度/加速度平滑保留，突发边界制动优先；历史检测参数仅兼容读取。保留真实反馈/电机故障处理及回零遇阻柔顺停止。两侧增益、GELLO固定零点不变，新旧入口有效参数一致。73项相关离线测试全部通过，两次实际故障帧回放通过；未启动机械臂、未烧录。证据evidence/directional-soft-limits-tests.log、directional-soft-limits-replay.json；修改前备份evidence/before-directional-soft-limits。此条取代上一条仅取消新臂跟随误差的临时方案。
+
+2026-11-06 遥操迟缓原因和修正：19:26:46日志两侧各8872帧，命令约303.8Hz，六轴发送参考速度均卡在15度/秒；即使先截断到合法角度，目标与发出参考偏差p95仍17至67度。上轮取消退出条件却保留15度/秒、30度/秒²轨迹过滤，是主要软件迟缓来源。当前两种入口均reference_filter=False，恢复旧版绝对位置目标+MIT dq=0，限位只截断位置，取消累积轨迹延迟和32轮求解；原可选过滤算法保留但不运行。角度边界、固定零点、增益、回零遇阻与退出柔顺保持不变。74项回归通过，双侧17744条记录目标回放均当周期等于截断目标；回放反馈为合成有效静止反馈，非实机跟随验证。未启动机械臂或烧录。证据evidence/direct-position-follow-tests.log、direct-position-follow-replay.json；备份evidence/before-direct-position-follow。
+
+2026-11-06 手失联隔离排查进行中：两臂原为HOME_FAULT、mode0，确认停驱动后仅新臂烧录关闭LOCAL_HOME/BOOT_HOME的临时诊断固件。未断手电源时，纯手5/50Hz查询抓包电机TX=0、手RX=0；曾恢复正式镜像并维护启动验证成功。用户随后确认臂手断电、支撑后，重新安装新臂诊断镜像，纯手5Hz下用户上电，新臂手恢复、原臂正式固件侧仍无回复。同一新臂板不重启不换固件：纯手8秒、加入3000Hz电机只读15秒、operation17加入3000Hz停止帧15秒，手均持续5Hz回包；随后停止流量状态下继续正常数分钟。尚不能认定上电回零是唯一根因；重点待验证手上电时已有电机流量的情况。当前等待用户第二次臂手断电10秒再上电回答，新臂暂留诊断镜像phase15，原臂仍正式镜像phase6；两臂mode0、没有运动目标。正式左镜像/ELF在evidence/soft-stop-firmware/left.bin、left.elf，需测试结束后用maintenance恢复，切勿普通复位触发回零。右诊断镜像已编译但未烧录。证据与恢复信息evidence/hand-isolation-diagnostic/current-state.json、cold-watch.jsonl、traffic-compare.json、loaded-start-watch.jsonl。
+
+2026-11-06 20:50 第二次臂手电源重启已由用户确认。重启后新臂手计数停1493，原臂0，5/50Hz查询各8秒均无新回复；NXP boot不变，电机停止报文持续。结果提示启动阶段流量/时序影响，但第二次上电前查询监视已结束（手查询禁用）而第一轮查询运行，故不是严格单变量实验，尚不能认定唯一根因。新臂现已恢复原正式soft-stop镜像并Flash校验通过，维护启动phase15，原臂phase6未烧录，两臂mode0、active0；不再留诊断固件，两手当前仍无回复。完整结论见手部上电通信对照结果.txt和evidence/hand-isolation-diagnostic/current-state.json。
+
+2026-11-06 21:04 已复现并修正本次手上电失联：相同5Hz查询持续运行、两侧无电机流量冷启动均正常；仅新臂加入持续STOP后再次共同断电上电，新手停305不再回复、原手继续回复。新增stopped_can：至少20ms停止发送并收到逐轴新鲜有效模式0确认后，不再在待机/硬故障状态重复STOP；显式状态请求恢复只读查询，未确认的轴仍STOP；离开停止状态清除确认，柔顺保持/正常MIT不变。139项Python+C检查通过，两板修正版已烧录回读一致；六轴重新查询/租约申请释放验证通过。用户再次断电上电后双手50Hz恢复，连续末60秒在线且角度年龄<100ms，电机计数不增加；GELLO USB mask127正常。当前两板正式修正版phase15、active0，非诊断固件，未发送运动目标或跑回零/遥操。正式镜像evidence/confirmed-stop-quiet-firmware，旧正式回退evidence/soft-stop-firmware；证据evidence/hand-startup-controlled/fixed-final-result.json。此结论针对当前复现的停止状态冷启动故障，不声称解决上午所有运动中偶发掉线。

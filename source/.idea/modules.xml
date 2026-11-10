@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/FRDM-MCXN947-L1-Hand-PantheraHT.iml" filepath="$PROJECT_DIR$/.idea/FRDM-MCXN947-L1-Hand-PantheraHT.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/clarabel.iml" filepath="$PROJECT_DIR$/.idea/clarabel.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/florid-usb.iml" filepath="$PROJECT_DIR$/.idea/florid-usb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/pyAgxArm.iml" filepath="$PROJECT_DIR$/.idea/pyAgxArm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/pyflorid.iml" filepath="$PROJECT_DIR$/.idea/pyflorid.iml" />
+    </modules>
+  </component>
+</project>

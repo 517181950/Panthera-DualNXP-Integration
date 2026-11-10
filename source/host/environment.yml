@@ -1,0 +1,16 @@
+name: L1-Hand-PantheraHT
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - python=3.12
+  - pip
+  - pinocchio
+  - numpy
+  - scipy
+  - pandas
+  - matplotlib
+  - scikit-learn
+  - pip:
+      - mujoco
+      - dearpygui

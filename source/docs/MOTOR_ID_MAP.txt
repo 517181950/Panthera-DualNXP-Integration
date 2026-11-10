@@ -1,0 +1,4 @@
+Motor CAN IDs: J1=0x11(17), J2=0x12(18), J3=0x13(19), J4=0x14(20), J5=0x15(21), J6=0x16(22).
+TX IDs 0x8011..0x8016. Feedback IDs 0x1100..0x1600 map to SDK array indices0..5.
+Hand ID remains0x08. UDP joint masks and SDK arrays remain J1..J6.
+Old motor reply IDs0x0100..0x0600 are not accepted as the six configured joints.

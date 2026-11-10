@@ -1,0 +1,481 @@
+{
+  "side": "right",
+  "ids": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "signs": [
+    -1,
+    -1,
+    1,
+    1,
+    -1,
+    -1
+  ],
+  "verified": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+  ],
+  "evidence": {
+    "1": {
+      "axis": 1,
+      "status": "awaiting_manual_move",
+      "master_before": {
+        "ticks": [
+          186,
+          1115,
+          2500,
+          152,
+          6273,
+          4088,
+          299
+        ],
+        "current_ma": [
+          26.0,
+          26.0,
+          26.0,
+          26.0,
+          45.5,
+          19.5,
+          19.5
+        ],
+        "oldest": 239248.599127554,
+        "received": 239248.602703205
+      },
+      "side": "right",
+      "folder": "/home/aster/Desktop/Panthera-DualNXP-Integration/logs/gello_direction_20261109_220600_077104",
+      "arm_start": [
+        0.017544906586408615,
+        -0.0038349521346390247,
+        0.017065536230802536,
+        0.004026699811220169,
+        0.007190535310655832,
+        0.002588592702522874
+      ],
+      "arm_target": [
+        0.19207783178584156,
+        -0.0038349521346390247,
+        0.017065536230802536,
+        0.004026699811220169,
+        0.007190535310655832,
+        0.002588592702522874
+      ],
+      "actual_positive_deg": 9.420776829030803,
+      "master_after": {
+        "ticks": [
+          -30,
+          1115,
+          2489,
+          231,
+          6313,
+          4000,
+          299
+        ],
+        "current_ma": [
+          26.0,
+          32.5,
+          32.5,
+          19.5,
+          32.5,
+          26.0,
+          19.5
+        ],
+        "oldest": 239283.293162874,
+        "received": 239283.296435766
+      },
+      "delta_ticks": [
+        -216,
+        0,
+        -11,
+        79,
+        40,
+        -88,
+        0
+      ],
+      "method": "user moved corresponding master axis in demonstrated slave-positive direction"
+    },
+    "2": {
+      "axis": 2,
+      "status": "awaiting_manual_move",
+      "master_before": {
+        "ticks": [
+          300,
+          1114,
+          2467,
+          243,
+          6351,
+          4037,
+          299
+        ],
+        "current_ma": [
+          26.0,
+          26.0,
+          32.5,
+          26.0,
+          39.0,
+          26.0,
+          19.5
+        ],
+        "oldest": 239297.158717983,
+        "received": 239297.161886469
+      },
+      "side": "right",
+      "folder": "/home/aster/Desktop/Panthera-DualNXP-Integration/logs/gello_direction_20261109_220648_636020",
+      "arm_start": [
+        0.02943325787782669,
+        -0.0038349521346390247,
+        0.017065536230802536,
+        0.004026699811220169,
+        0.007190535310655832,
+        0.002588592702522874
+      ],
+      "arm_target": [
+        0.02943325787782669,
+        0.17069797306479392,
+        0.017065536230802536,
+        0.004026699811220169,
+        0.007190535310655832,
+        0.002588592702522874
+      ],
+      "actual_positive_deg": 9.475708652111056,
+      "master_after": {
+        "ticks": [
+          96,
+          979,
+          2468,
+          342,
+          6124,
+          4142,
+          299
+        ],
+        "source": "stable read after user confirmation, before return to rest"
+      },
+      "delta_ticks": [
+        -204,
+        -135,
+        1,
+        99,
+        -227,
+        105,
+        0
+      ],
+      "method": "user moved corresponding master axis in demonstrated slave-positive direction"
+    },
+    "3": {
+      "axis": 3,
+      "status": "awaiting_manual_move",
+      "master_before": {
+        "ticks": [
+          103,
+          1113,
+          2467,
+          237,
+          6129,
+          4142,
+          299
+        ],
+        "current_ma": [
+          26.0,
+          26.0,
+          26.0,
+          26.0,
+          39.0,
+          26.0,
+          19.5
+        ],
+        "oldest": 239436.075524756,
+        "received": 239436.078797823
+      },
+      "side": "right",
+      "folder": "/home/aster/Desktop/Panthera-DualNXP-Integration/logs/gello_direction_20261109_220907_554139",
+      "arm_start": [
+        0.02943325787782669,
+        -0.0019174760673195124,
+        0.13134710490703583,
+        0.003930825740098953,
+        0.007286408916115761,
+        0.002684466540813446
+      ],
+      "arm_target": [
+        0.02943325787782669,
+        -0.0019174760673195124,
+        0.3058800301064688,
+        0.003930825740098953,
+        0.007286408916115761,
+        0.002684466540813446
+      ],
+      "actual_positive_deg": 9.876708818158667,
+      "master_after": {
+        "ticks": [
+          127,
+          1115,
+          2662,
+          147,
+          6130,
+          4077,
+          304
+        ],
+        "current_ma": [
+          26.0,
+          26.0,
+          26.0,
+          19.5,
+          32.5,
+          26.0,
+          26.0
+        ],
+        "oldest": 239486.883260051,
+        "received": 239486.886539447
+      },
+      "delta_ticks": [
+        24,
+        2,
+        195,
+        -90,
+        1,
+        -65,
+        5
+      ],
+      "method": "user moved corresponding master axis in demonstrated slave-positive direction"
+    },
+    "4": {
+      "axis": 4,
+      "status": "awaiting_manual_move",
+      "master_before": {
+        "ticks": [
+          120,
+          1115,
+          2677,
+          118,
+          6134,
+          4065,
+          304
+        ],
+        "current_ma": [
+          26.0,
+          26.0,
+          32.5,
+          19.5,
+          32.5,
+          32.5,
+          26.0
+        ],
+        "oldest": 239492.814153096,
+        "received": 239492.818218813
+      },
+      "side": "right",
+      "folder": "/home/aster/Desktop/Panthera-DualNXP-Integration/logs/gello_direction_20261109_221004_292448",
+      "arm_start": [
+        0.02943325787782669,
+        -0.0038349521346390247,
+        0.14908376336097717,
+        0.003930825740098953,
+        0.007286408916115761,
+        0.002684466540813446
+      ],
+      "arm_target": [
+        0.02943325787782669,
+        -0.0038349521346390247,
+        0.14908376336097717,
+        0.1784637509395319,
+        0.007286408916115761,
+        0.002684466540813446
+      ],
+      "actual_positive_deg": 6.388549778609961,
+      "master_after": {
+        "ticks": [
+          163,
+          1115,
+          2457,
+          552,
+          6196,
+          4126,
+          304
+        ],
+        "current_ma": [
+          32.5,
+          26.0,
+          26.0,
+          -13.0,
+          39.0,
+          26.0,
+          26.0
+        ],
+        "oldest": 239551.087777826,
+        "received": 239551.090931373
+      },
+      "delta_ticks": [
+        43,
+        0,
+        -220,
+        434,
+        62,
+        61,
+        0
+      ],
+      "method": "user moved corresponding master axis in demonstrated slave-positive direction"
+    },
+    "5": {
+      "axis": 5,
+      "status": "awaiting_manual_move",
+      "master_before": {
+        "ticks": [
+          163,
+          1115,
+          2457,
+          552,
+          6196,
+          4126,
+          304
+        ],
+        "current_ma": [
+          32.5,
+          26.0,
+          26.0,
+          26.0,
+          32.5,
+          26.0,
+          19.5
+        ],
+        "oldest": 239556.607657146,
+        "received": 239556.611779521
+      },
+      "side": "right",
+      "folder": "/home/aster/Desktop/Panthera-DualNXP-Integration/logs/gello_direction_20261109_221108_086183",
+      "arm_start": [
+        0.03566505387425423,
+        0.037774279713630676,
+        0.1492755115032196,
+        0.022434469312429428,
+        0.007286408916115761,
+        0.002684466540813446
+      ],
+      "arm_target": [
+        0.03566505387425423,
+        0.037774279713630676,
+        0.1492755115032196,
+        0.022434469312429428,
+        0.1818193341155487,
+        0.002684466540813446
+      ],
+      "actual_positive_deg": 9.684448704698035,
+      "master_after": {
+        "ticks": [
+          327,
+          1116,
+          2457,
+          340,
+          5841,
+          4130,
+          304
+        ],
+        "current_ma": [
+          26.0,
+          32.5,
+          32.5,
+          13.0,
+          39.0,
+          26.0,
+          26.0
+        ],
+        "oldest": 239603.309328462,
+        "received": 239603.312642562
+      },
+      "delta_ticks": [
+        164,
+        1,
+        0,
+        -212,
+        -355,
+        4,
+        0
+      ],
+      "method": "user moved corresponding master axis in demonstrated slave-positive direction"
+    },
+    "6": {
+      "axis": 6,
+      "status": "awaiting_manual_move",
+      "master_before": {
+        "ticks": [
+          327,
+          1116,
+          2457,
+          340,
+          5841,
+          4130,
+          304
+        ],
+        "current_ma": [
+          26.0,
+          32.5,
+          26.0,
+          26.0,
+          39.0,
+          26.0,
+          19.5
+        ],
+        "oldest": 239609.432487414,
+        "received": 239609.43667588
+      },
+      "side": "right",
+      "folder": "/home/aster/Desktop/Panthera-DualNXP-Integration/logs/gello_direction_20261109_221200_910959",
+      "arm_start": [
+        0.03585680201649666,
+        0.03576092794537544,
+        0.1491796374320984,
+        0.022434469312429428,
+        0.016394419595599174,
+        0.002684466540813446
+      ],
+      "arm_target": [
+        0.03585680201649666,
+        0.03576092794537544,
+        0.1491796374320984,
+        0.022434469312429428,
+        0.016394419595599174,
+        0.1772173917402464
+      ],
+      "actual_positive_deg": 10.052490139751292,
+      "master_after": {
+        "ticks": [
+          188,
+          1116,
+          2457,
+          223,
+          6177,
+          3700,
+          304
+        ],
+        "current_ma": [
+          26.0,
+          32.5,
+          26.0,
+          19.5,
+          39.0,
+          26.0,
+          19.5
+        ],
+        "oldest": 239647.229863279,
+        "received": 239647.233353707
+      },
+      "delta_ticks": [
+        -139,
+        0,
+        0,
+        -117,
+        336,
+        -430,
+        0
+      ],
+      "method": "user moved corresponding master axis in demonstrated slave-positive direction"
+    }
+  }
+}
